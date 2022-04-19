@@ -43,6 +43,9 @@ namespace ShakespeareanPokemonAPI
             var pokeApiSettings = Configuration.GetSection("PokeApi");
             services.Configure<ConfigSettingsPokeAPI>(pokeApiSettings);
 
+            var funTranslationApiSettings = Configuration.GetSection("FunTranslationsAPI");
+            services.Configure<ConfigSettingsPokeAPI>(funTranslationApiSettings);
+
             services.RegisterServices();
         }
 
