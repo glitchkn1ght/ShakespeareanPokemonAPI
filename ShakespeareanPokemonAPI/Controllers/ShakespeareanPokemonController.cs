@@ -7,30 +7,26 @@ namespace ShakespeareanPokemonAPI.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
-    using PokeApiNet;
-    using ShakespeareanPokemonAPI.Services;
+    using ShakespeareanPokemonAPI.BusinessLogic;
     using ShakespeareanPokemonAPI.Models.Responses;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
-    using ShakespeareanPokemonAPI.Models;
 
     [ApiController]
     [Route("[controller]")]
     public class ShakespeareanPokemonController : ControllerBase
     {
         private readonly ILogger<ShakespeareanPokemonController> Logger;
-        private readonly IPokeApiService PokeApiService;
+        private readonly IShakespeareanPokemonOrchestrator ShakespeareanPokemonOrchestrator;
 
         public ShakespeareanPokemonController
             (
                 ILogger<ShakespeareanPokemonController> logger,
-                IPokeApiService pokeApiService
+                IShakespeareanPokemonOrchestrator shakespeareanPokemonOrchestrator
             )
         {
             this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            this.PokeApiService = pokeApiService ?? throw new ArgumentNullException(nameof(pokeApiService));
+            this.ShakespeareanPokemonOrchestrator = shakespeareanPokemonOrchestrator ?? throw new ArgumentNullException(nameof(shakespeareanPokemonOrchestrator));
 
         }
 
@@ -39,9 +35,9 @@ namespace ShakespeareanPokemonAPI.Controllers
         {
             try
             {
-                PokeResponse rawResponse = await this.PokeApiService.GetPokemonFromApi(pokemonName);
+                PokeResponse PokemonResponse = await this.ShakespeareanPokemonOrchestrator.GetShakespeareanPokemon(pokemonName);
 
-                return new ObjectResult(rawResponse) { StatusCode = rawResponse.ErrorCode};
+                return new ObjectResult(PokemonResponse) { StatusCode = PokemonResponse.StatusCode};
             }
 
             catch(Exception ex)

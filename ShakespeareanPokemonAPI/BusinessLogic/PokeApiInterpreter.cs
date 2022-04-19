@@ -49,8 +49,8 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
                 {
                     this.Logger.LogWarning($"[Operation=InterepretPokeApiResponse], Status=Success, Message=Could not map description from response");
 
-                    pokemonResponse.ErrorCode = 404;
-                    pokemonResponse.ErrorMessage = "Pokemon was found on Api but no valid description could be mapped";
+                    pokemonResponse.StatusCode = 404;
+                    pokemonResponse.StatusMessage = "Pokemon was found on Api but no valid description could be mapped";
                 }
             }
 

@@ -3,14 +3,18 @@
 // 19/04/2022 Ticket1 JS Team darkSaber - Initial version. 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace ShakespeareanPokemonAPI.Models.Responses
+namespace ShakespeareanPokemonAPI.Models.FunTranslationsApi
 {
-    public class BaseResponse
+    using Newtonsoft.Json;
+    public class TranslationContents
     {
-        public bool IsSuccess { get; set; } = false;
+        [JsonProperty("translated")]
+        public string TranslatedText { get; set; }
 
-        public int StatusCode { get; set; }
+        [JsonProperty("text")]
+        public string OriginalText { get; set; }
 
-        public string StatusMessage { get; set; }
+        [JsonProperty("translation")]
+        public string TranlastionType { get; set; }
     }
 }

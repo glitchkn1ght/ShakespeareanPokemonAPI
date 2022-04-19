@@ -5,12 +5,11 @@
 
 namespace ShakespeareanPokemonAPI.Models.Responses
 {
-    public class BaseResponse
+    using Newtonsoft.Json;
+    using ShakespeareanPokemonAPI.Models.Responses;
+
+    public class TraslationResponse : BaseResponse
     {
-        public bool IsSuccess { get; set; } = false;
-
-        public int StatusCode { get; set; }
-
-        public string StatusMessage { get; set; }
+        public string TranslatedText { get; set; }
     }
 }
