@@ -1,14 +1,15 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+//Change History
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 19/04/2022 Ticket1 JS Team darkSaber - Initial version. 
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace ShakespeareanPokemonAPI
 {
+
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
+    using Serilog;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -21,6 +22,8 @@ namespace ShakespeareanPokemonAPI
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+                .UseSerilog((hostingContext, loggerConfig) =>
+                loggerConfig.ReadFrom.Configuration(hostingContext.Configuration));
     }
 }
