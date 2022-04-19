@@ -7,7 +7,9 @@ namespace ShakespeareanPokemonAPI.Models.Responses
 {
     public class BaseResponse
     {
-        public bool IsSucess { get; set; }
+        public bool IsSuccess { get; set; } = false;
+
+        public int ErrorCode { get; set; }
 
         public string ErrorMessage { get; set; }
     }

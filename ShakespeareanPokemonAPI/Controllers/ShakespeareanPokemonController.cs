@@ -9,10 +9,12 @@ namespace ShakespeareanPokemonAPI.Controllers
     using Microsoft.Extensions.Logging;
     using PokeApiNet;
     using ShakespeareanPokemonAPI.Services;
+    using ShakespeareanPokemonAPI.Models.Responses;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using ShakespeareanPokemonAPI.Models;
 
     [ApiController]
     [Route("[controller]")]
@@ -37,9 +39,9 @@ namespace ShakespeareanPokemonAPI.Controllers
         {
             try
             {
-                PokemonSpecies species = await this.PokeApiService.GetPokemonDescription(pokemonName);
+                PokeResponse rawResponse = await this.PokeApiService.GetPokemonFromApi(pokemonName);
 
-                return new OkObjectResult(species);
+                return new ObjectResult(rawResponse) { StatusCode = rawResponse.ErrorCode};
             }
 
             catch(Exception ex)

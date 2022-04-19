@@ -3,16 +3,15 @@
 // 19/04/2022 Ticket1 JS Team darkSaber - Initial version. 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace ShakespeareanPokemonAPI.Models
+namespace ShakespeareanPokemonAPI.Models.Responses
 {
     using Newtonsoft.Json;
+    using ShakespeareanPokemonAPI.Models.Responses;
 
-    public class ShakespeareanPokemon
+    public class PokeResponse : BaseResponse
     {
-        [JsonProperty("name")]
-        string Name { get; set; }
+        public string PokemonName { get; set; }
 
-        [JsonProperty("description")]
-        string Description { get; set; }
+        public string PokemonDescription { get; set; }
     }
 }

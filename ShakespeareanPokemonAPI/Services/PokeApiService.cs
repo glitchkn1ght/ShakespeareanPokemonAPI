@@ -7,37 +7,39 @@ namespace ShakespeareanPokemonAPI.Services
 {
     using PokeApiNet;
     using ShakespeareanPokemonAPI.Models.Config;
-    using ShakespeareanPokemonAPI.Models;
+    using ShakespeareanPokemonAPI.Models.Responses;
     using System.Threading.Tasks;
     using System.Net.Http;
     using Microsoft.Extensions.Options;
     using System;
+    using ShakespeareanPokemonAPI.BusinessLogic;
 
     public interface IPokeApiService
     {
-        public Task<PokemonSpecies> GetPokemonDescription(string pokemonName);
+        public Task<PokeResponse> GetPokemonFromApi(string pokemonName);
     }
 
     public class PokeApiService : IPokeApiService
     {
-        private readonly PokeApiClient Client;
-        private readonly ConfigSettingsPokeAPI configSettings;
+        private readonly HttpClient Client;
+        private readonly ConfigSettingsPokeAPI PokeApiConfigSettings;
+        private readonly IPokeApiInterpreter PokeApiInterpreter;
 
-        public PokeApiService(HttpClient httpClient, IOptions<ConfigSettingsPokeAPI> configPokeApiSettings)
+        public PokeApiService(HttpClient client, IOptions<ConfigSettingsPokeAPI> pokeApiConfigSettings, IPokeApiInterpreter pokeApiInterpreter)
         {
-            this.configSettings = configPokeApiSettings.Value;
-            httpClient.BaseAddress = new Uri(configSettings.BaseUrl);
-            this.Client = new PokeApiClient(httpClient);
+            this.PokeApiConfigSettings = pokeApiConfigSettings.Value;
+            this.Client = client;
+            this.Client.BaseAddress = new Uri(PokeApiConfigSettings.BaseUrl);
+            this.PokeApiInterpreter = pokeApiInterpreter;
         }
 
-
-        public async Task<PokemonSpecies> GetPokemonDescription(string pokemonName)
+        public async Task<PokeResponse> GetPokemonFromApi(string pokemonName)
         {
-            var resource = $"{configSettings.PokemonResourceUrl}/{pokemonName}";
+            var resource = $"{PokeApiConfigSettings.PokemonResourceUrl}/{pokemonName}";
 
-            PokemonSpecies species = await this.Client.GetResourceAsync<PokemonSpecies>(pokemonName);
+            PokeResponse pokeResponse = await this.PokeApiInterpreter.InterepretPokeApiResponse(await this.Client.GetAsync(resource), PokeApiConfigSettings.DescriptionLanguage);
 
-            return species;
+            return pokeResponse;
         }
     }
 }

@@ -6,6 +6,8 @@
 namespace ShakespeareanPokemonAPI.DependancyResolution
 {
     using Microsoft.Extensions.DependencyInjection;
+    using ShakespeareanPokemonAPI.BusinessLogic;
+    using ShakespeareanPokemonAPI.Mappers;
     using ShakespeareanPokemonAPI.Services;
 
     public static class DependencyInjectionExtension
@@ -13,6 +15,8 @@ namespace ShakespeareanPokemonAPI.DependancyResolution
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             services.AddScoped<IPokeApiService, PokeApiService>();
+            services.AddScoped<IPokemonDescriptionMapper, PokemonDescriptionMapper>();
+            services.AddScoped<IPokeApiInterpreter, PokeApiInterpreter>();
             return services;
         }
     }

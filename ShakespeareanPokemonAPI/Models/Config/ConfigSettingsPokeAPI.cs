@@ -11,6 +11,8 @@ namespace ShakespeareanPokemonAPI.Models.Config
 
         public string PokemonResourceUrl { get; set; }
 
+        public string DescriptionLanguage { get; set; }
+
         public string ContentType { get; set; }
     }
 }
