@@ -13,6 +13,7 @@ namespace ShakespeareanPokemonAPI
     using Microsoft.Extensions.Logging;
     using ShakespeareanPokemonAPI.DependancyResolution;
     using ShakespeareanPokemonAPI.Models.Config;
+    using ShakespeareanPokemonAPI.Services;
     using System;
     using System.IO;
     using System.Reflection;
@@ -38,7 +39,7 @@ namespace ShakespeareanPokemonAPI
                 c.IncludeXmlComments(xmlPath);
             });
 
-           // services.AddHttpClient<IWeatherService>();
+           services.AddHttpClient<IPokeApiService>();
 
             var pokeApiSettings = Configuration.GetSection("PokeApi");
             services.Configure<ConfigSettingsPokeAPI>(pokeApiSettings);
