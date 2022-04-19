@@ -13,6 +13,7 @@ namespace ShakespeareanPokemonAPI.Services
     using Microsoft.Extensions.Options;
     using System;
     using ShakespeareanPokemonAPI.BusinessLogic;
+    using Microsoft.Extensions.Logging;
 
     public interface IPokeApiService
     {
@@ -21,12 +22,14 @@ namespace ShakespeareanPokemonAPI.Services
 
     public class PokeApiService : IPokeApiService
     {
+        private readonly ILogger<PokeApiService> Logger;
         private readonly HttpClient Client;
         private readonly ConfigSettingsPokeAPI PokeApiConfigSettings;
         private readonly IPokeApiInterpreter PokeApiInterpreter;
 
-        public PokeApiService(HttpClient client, IOptions<ConfigSettingsPokeAPI> pokeApiConfigSettings, IPokeApiInterpreter pokeApiInterpreter)
+        public PokeApiService(ILogger<PokeApiService> logger, HttpClient client, IOptions<ConfigSettingsPokeAPI> pokeApiConfigSettings, IPokeApiInterpreter pokeApiInterpreter)
         {
+            this.Logger = logger;
             this.PokeApiConfigSettings = pokeApiConfigSettings.Value;
             this.Client = client;
             this.Client.BaseAddress = new Uri(PokeApiConfigSettings.BaseUrl);
@@ -36,6 +39,8 @@ namespace ShakespeareanPokemonAPI.Services
         public async Task<PokeResponse> GetPokemonFromApi(string pokemonName)
         {
             var resource = $"{PokeApiConfigSettings.PokemonResourceUrl}/{pokemonName}";
+
+            this.Logger.LogInformation($"[Operation=GetPokemonFromApi], Status=Success, Message=Calling to PokeApi at {this.Client.BaseAddress+resource}");
 
             PokeResponse pokeResponse = await this.PokeApiInterpreter.InterepretPokeApiResponse(await this.Client.GetAsync(resource), PokeApiConfigSettings.DescriptionLanguage);
 
