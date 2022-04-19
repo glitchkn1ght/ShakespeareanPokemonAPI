@@ -1,19 +1,22 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+//Change History
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 19/04/2022 Ticket1 JS Team darkSaber - Initial version. 
+// --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 namespace ShakespeareanPokemonAPI
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
+    using ShakespeareanPokemonAPI.DependancyResolution;
+    using ShakespeareanPokemonAPI.Models.Config;
+    using System;
+    using System.IO;
+    using System.Reflection;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -30,19 +33,34 @@ namespace ShakespeareanPokemonAPI
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ShakespeareanPokemonAPI", Version = "v1" });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
+
+           // services.AddHttpClient<IWeatherService>();
+
+            var pokeApiSettings = Configuration.GetSection("PokeApi");
+            services.Configure<ConfigSettingsPokeAPI>(pokeApiSettings);
+
+            services.RegisterServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ShakespeareanPokemonAPI v1"));
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "weather");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseHttpsRedirection();
 
