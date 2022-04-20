@@ -6,6 +6,7 @@
 namespace ShakespeareanPokemonAPI.BusinessLogic
 {
     using Microsoft.Extensions.Logging;
+    using Newtonsoft.Json;
     using ShakespeareanPokemonAPI.Mappers;
     using ShakespeareanPokemonAPI.Models.FunTranslationsApi;
     using ShakespeareanPokemonAPI.Models.Responses;
@@ -60,8 +61,10 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
             {
                 this.Logger.LogWarning($"[Operation=InterepretFTApiResponse], Status=Failure, Message=Failure code received from TranslationAPI endpoint");
 
-                translationResponse.ResponseStatus.StatusCode = 500;
-                translationResponse.ResponseStatus.StatusMessage = "Failure code received from TranslationAPI endpoint";
+                Error error = JsonConvert.DeserializeObject<Error>(await ApiResponse.Content.ReadAsStringAsync());
+
+                translationResponse.ResponseStatus.StatusCode = error.ErrorDetail.Code;
+                translationResponse.ResponseStatus.StatusMessage = error.ErrorDetail.Message;
             }
 
             return translationResponse;

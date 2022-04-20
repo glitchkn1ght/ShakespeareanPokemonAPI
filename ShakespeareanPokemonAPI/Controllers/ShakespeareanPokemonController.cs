@@ -47,7 +47,7 @@ namespace ShakespeareanPokemonAPI.Controllers
 
                 this.Logger.LogWarning($"[Operation=ShakespeareanPokemonController(Get)], Status=Failure, Message=Unable to retrieve and map description for pokemon {pokemonName}, details: {response.ResponseStatus}");
 
-                return new ObjectResult(response.ResponseStatus);
+                return new ObjectResult(response.ResponseStatus) {StatusCode = response.ResponseStatus.StatusCode };
             }
 
             catch(Exception ex)
