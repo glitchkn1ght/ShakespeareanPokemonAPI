@@ -14,12 +14,12 @@ namespace ShakespeareanPokemonAPI.Mappers
 
     public interface IPokemonDescriptionMapper
     {
-        public Task<PokeApiResponse> MapPokemonDescription(HttpResponseMessage httpResponse, string descriptionLanguage);
+        public Task<string> MapPokemonDescription(HttpResponseMessage httpResponse, string descriptionLanguage);
     }
 
     public class PokemonDescriptionMapper : IPokemonDescriptionMapper
     {
-        public async Task<PokeApiResponse> MapPokemonDescription(HttpResponseMessage httpResponse, string descriptionLanguage)
+        public async Task<string> MapPokemonDescription(HttpResponseMessage httpResponse, string descriptionLanguage)
         {
             PokeApiResponse mappedResponse = new PokeApiResponse();
 
@@ -27,9 +27,9 @@ namespace ShakespeareanPokemonAPI.Mappers
 
             string rawDescription = pokemon.FlavorTextEntries.Where(x => x.Language.Name.ToUpper() == descriptionLanguage).FirstOrDefault()?.FlavorText;
 
-            mappedResponse.PokemonDescription = rawDescription.Replace("\n", " ").Replace("\f"," ");
+            rawDescription = rawDescription.Replace("\n", " ").Replace("\f"," ");
 
-            return mappedResponse;
+            return rawDescription;
         }
     }
 }

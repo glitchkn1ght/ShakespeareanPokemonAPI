@@ -36,7 +36,7 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
             {
                 this.Logger.LogInformation($"[Operation=InterepretPokeApiResponse], Status=Success, Message=Success code received from PokeApi endpoint, mapping description.");
 
-                pokeApiResponse = await this.DescriptionMapper.MapPokemonDescription(ApiResponse, descriptionLanguage);
+                pokeApiResponse.PokemonDescription = await this.DescriptionMapper.MapPokemonDescription(ApiResponse, descriptionLanguage);
 
                 if (!string.IsNullOrWhiteSpace(pokeApiResponse.PokemonDescription))
                 {

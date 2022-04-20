@@ -52,7 +52,7 @@ namespace ShakespeareanPokemonAPI.Controllers
 
             catch(Exception ex)
             {
-                this.Logger.LogError($"[Operation=ShakespeareanPokemonController(Get)], Status=Failed, Message=Exeception thrown: {ex.Message}");
+                this.Logger.LogError($"[Operation=ShakespeareanPokemonController(Get)], Status=Failed, Message=Exeception thrown");
 
                 return new ObjectResult(ex) { StatusCode = 500 };
             }

@@ -17,6 +17,7 @@ namespace ShakespeareanPokemonAPI.DependancyResolution
             services.AddScoped<IPokemonDescriptionMapper, PokemonDescriptionMapper>();
             services.AddScoped<ITranslationMapper, ShakespeareTranslationMapper>();
             services.AddScoped<IPokeApiInterpreter, PokeApiInterpreter>();
+            services.AddScoped<IFunTranslationsApiInterepreter, FunTranslationsApiInterepreter>();
             services.AddScoped<IPokeApiService, PokeApiService>();
             services.AddScoped<IFunTranslationsApiService, FunTranslationsApiService>();
             services.AddScoped<IShakespeareanPokemonOrchestrator, ShakespeareanPokemonOrchestrator>();

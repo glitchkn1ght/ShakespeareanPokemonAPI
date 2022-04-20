@@ -12,8 +12,12 @@ namespace ShakespeareanPokemonAPI.Services
     using System.Net.Http;
     using Microsoft.Extensions.Options;
     using System;
+    using System.Text.Encodings;
     using ShakespeareanPokemonAPI.BusinessLogic;
     using Microsoft.Extensions.Logging;
+    using ShakespeareanPokemonAPI.Models.FunTranslationsApi;
+    using Newtonsoft.Json;
+    using System.Text;
 
     public interface IFunTranslationsApiService
     {
@@ -40,9 +44,12 @@ namespace ShakespeareanPokemonAPI.Services
         {
             var resource = $"{FTApiConfigSettings.ShakespeareTranslateResourceUrl}";
 
-            this.Logger.LogInformation($"[Operation=TranslatePokemonDescription], Status=Success, Message=Calling to PokeApi at {this.Client.BaseAddress+resource}");
+            var json = JsonConvert.SerializeObject(new PostBody(descriptionInModernEnglish));
+            var data = new StringContent(json, Encoding.UTF8, this.FTApiConfigSettings.ContentType);
 
-            TraslationResponse translationResponse = await this.FTApiInterpreter.InterepretFTApiResponse(await this.Client.GetAsync(resource));
+            this.Logger.LogInformation($"[Operation=TranslatePokemonDescription], Status=Success, Message=Calling to FunTranslationsApi at {this.Client.BaseAddress+resource}");
+
+            TraslationResponse translationResponse = await this.FTApiInterpreter.InterepretFTApiResponse(await this.Client.PostAsync(resource,data));
 
             return translationResponse;
         }

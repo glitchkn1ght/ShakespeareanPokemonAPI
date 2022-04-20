@@ -39,7 +39,6 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
 
             if (!pokeApiResponse.ResponseStatus.IsSuccess)
             {
-                response.ResponseStatus.IsSuccess = false;
                 response.ResponseStatus.StatusCode = pokeApiResponse.ResponseStatus.StatusCode;
                 response.ResponseStatus.StatusMessage = pokeApiResponse.ResponseStatus.StatusMessage;
                 
@@ -50,13 +49,13 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
 
             if(!traslationResponse.ResponseStatus.IsSuccess)
             {
-                response.ResponseStatus.IsSuccess = false;
                 response.ResponseStatus.StatusCode = traslationResponse.ResponseStatus.StatusCode;
                 response.ResponseStatus.StatusMessage = traslationResponse.ResponseStatus.StatusMessage;
 
                 return response; 
             }
 
+            response.ResponseStatus.IsSuccess = true;
             response.Pokemon.Name = pokemonName;
             response.Pokemon.ShakespeareanDescription = traslationResponse.TranslatedText;
 

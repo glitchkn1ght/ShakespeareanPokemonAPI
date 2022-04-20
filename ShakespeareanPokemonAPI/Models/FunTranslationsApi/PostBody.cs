@@ -3,15 +3,16 @@
 // 19/04/2022 Ticket1 JS Team darkSaber - Initial version. 
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-namespace ShakespeareanPokemonAPI.Models.Responses
+namespace ShakespeareanPokemonAPI.Models.FunTranslationsApi
 {
-    public abstract class BaseResponse
+    //I'm not good at naming things.
+    public class PostBody
     {
-        public BaseResponse()
+        public PostBody(string text)
         {
-            ResponseStatus = new ResponseStatus();
+            this.text = text;
         }
 
-        public ResponseStatus ResponseStatus { get; set; }
+        public string text { get; set; }
     }
 }

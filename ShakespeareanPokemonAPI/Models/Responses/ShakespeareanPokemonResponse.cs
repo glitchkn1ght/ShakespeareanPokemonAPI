@@ -7,6 +7,11 @@ namespace ShakespeareanPokemonAPI.Models.Responses
 {
     public class ShakespeareanPokemonResponse : BaseResponse
     {
+        public ShakespeareanPokemonResponse()
+        {
+            this.Pokemon = new ShakespeareanPokemon();
+        }
+
         public ShakespeareanPokemon Pokemon { get; set; }
     }
 }
