@@ -14,10 +14,12 @@ namespace ShakespeareanPokemonAPI.DependancyResolution
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
-            services.AddScoped<IShakespeareanPokemonOrchestrator, ShakespeareanPokemonOrchestrator>();
-            services.AddScoped<IPokeApiService, PokeApiService>();
             services.AddScoped<IPokemonDescriptionMapper, PokemonDescriptionMapper>();
+            services.AddScoped<ITranslationMapper, ShakespeareTranslationMapper>();
             services.AddScoped<IPokeApiInterpreter, PokeApiInterpreter>();
+            services.AddScoped<IPokeApiService, PokeApiService>();
+            services.AddScoped<IFunTranslationsApiService, FunTranslationsApiService>();
+            services.AddScoped<IShakespeareanPokemonOrchestrator, ShakespeareanPokemonOrchestrator>();
             return services;
         }
     }

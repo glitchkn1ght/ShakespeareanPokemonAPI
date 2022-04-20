@@ -6,6 +6,7 @@
 namespace ShakespeareanPokemonAPI.Models.FunTranslationsApi
 {
     using Newtonsoft.Json;
+
     public class TranslationContents
     {
         [JsonProperty("translated")]

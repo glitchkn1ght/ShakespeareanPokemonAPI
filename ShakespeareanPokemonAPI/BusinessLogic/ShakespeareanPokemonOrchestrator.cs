@@ -18,18 +18,15 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
 
     public class ShakespeareanPokemonOrchestrator : IShakespeareanPokemonOrchestrator
     {
-        private readonly ILogger<ShakespeareanPokemonOrchestrator> Logger;
         private readonly IFunTranslationsApiService FTApiService;
         private readonly IPokeApiService PokeApiService;
 
         public ShakespeareanPokemonOrchestrator
         (
-            ILogger<ShakespeareanPokemonOrchestrator> logger, 
             IFunTranslationsApiService ftApiService,
             IPokeApiService pokeApiService
         )
         {
-            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.FTApiService = ftApiService ?? throw new ArgumentNullException(nameof(ftApiService));
             this.PokeApiService = pokeApiService ?? throw new ArgumentNullException(nameof(pokeApiService));
         }

@@ -34,19 +34,25 @@ namespace ShakespeareanPokemonAPI.Controllers
         {
             try
             {
+                this.Logger.LogInformation($"[Operation=ShakespeareanPokemonController(Get)], Status=Success, Message=Attempting to retrieve and map description for pokemon {pokemonName}");
+
                 ShakespeareanPokemonResponse response = await this.ShakespeareanPokemonOrchestrator.GetShakespeareanPokemon(pokemonName);
 
                 if (response.ResponseStatus.IsSuccess)
                 {
-                   return new OkObjectResult(response.Pokemon);
+                    this.Logger.LogInformation($"[Operation=ShakespeareanPokemonController(Get)], Status=Success, Message=Attempting to retrieve and map description for pokemon {pokemonName}");
+
+                    return new OkObjectResult(response.Pokemon);
                 }
+
+                this.Logger.LogWarning($"[Operation=ShakespeareanPokemonController(Get)], Status=Failure, Message=Unable to retrieve and map description for pokemon {pokemonName}, details: {response.ResponseStatus}");
 
                 return new ObjectResult(response.ResponseStatus);
             }
 
             catch(Exception ex)
             {
-                this.Logger.LogError($"[Operation=Get(ShakespeareanPokemon)], Status=Failed, Message=Exeception thrown: {ex.Message}");
+                this.Logger.LogError($"[Operation=ShakespeareanPokemonController(Get)], Status=Failed, Message=Exeception thrown: {ex.Message}");
 
                 return new ObjectResult(ex) { StatusCode = 500 };
             }

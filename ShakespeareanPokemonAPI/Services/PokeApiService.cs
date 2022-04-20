@@ -5,15 +5,14 @@
 
 namespace ShakespeareanPokemonAPI.Services
 {
-    using PokeApiNet;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
+    using ShakespeareanPokemonAPI.BusinessLogic;
     using ShakespeareanPokemonAPI.Models.Config;
     using ShakespeareanPokemonAPI.Models.Responses;
-    using System.Threading.Tasks;
-    using System.Net.Http;
-    using Microsoft.Extensions.Options;
     using System;
-    using ShakespeareanPokemonAPI.BusinessLogic;
-    using Microsoft.Extensions.Logging;
+    using System.Net.Http;
+    using System.Threading.Tasks;
 
     public interface IPokeApiService
     {
