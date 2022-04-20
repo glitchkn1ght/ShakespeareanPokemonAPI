@@ -23,11 +23,16 @@ namespace ShakespeareanPokemonAPI.Mappers
         {
             PokeApiResponse mappedResponse = new PokeApiResponse();
 
-            PokemonSpecies pokemon = JsonConvert.DeserializeObject<PokemonSpecies>(await httpResponse.Content.ReadAsStringAsync());
+            var settings = new JsonSerializerSettings { Error = (se, ev) => { ev.ErrorContext.Handled = true; } };
 
-            string rawDescription = pokemon.FlavorTextEntries.Where(x => x.Language.Name.ToUpper() == descriptionLanguage).FirstOrDefault()?.FlavorText;
+            PokemonSpecies pokemon = JsonConvert.DeserializeObject<PokemonSpecies>(await httpResponse.Content.ReadAsStringAsync(),settings);
 
-            rawDescription = rawDescription.Replace("\n", " ").Replace("\f"," ");
+            string rawDescription = pokemon?.FlavorTextEntries?.Where(x => x.Language.Name.ToUpper() == descriptionLanguage).FirstOrDefault()?.FlavorText;
+
+            if (!string.IsNullOrEmpty(rawDescription))
+            {
+                rawDescription = rawDescription.Replace("\n", " ").Replace("\f", " ").Trim();
+            }
 
             return rawDescription;
         }
