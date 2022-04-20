@@ -44,23 +44,24 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
                     this.Logger.LogInformation($"[Operation=InterepretFTApiResponse], Status=Success, Message=Successfully mapped translation from response");
 
                     translationResponse.TranslatedText = translation.TranslationContents.TranslatedText;
-                    translationResponse.IsSuccess = true;
+                    translationResponse.ResponseStatus.IsSuccess = true;
                 }
 
                 else
                 {
                     this.Logger.LogWarning($"[Operation=InterepretFTApiResponse], Status=Success, Message=Could not map translation from response");
 
-                    translationResponse.StatusCode = 500;
-                    translationResponse.StatusMessage = "TranslationApi call was sucessful but no valid description could be mapped";
+                    translationResponse.ResponseStatus.StatusCode = 500;
+                    translationResponse.ResponseStatus.StatusMessage = "TranslationApi call was sucessful but no description could be mapped";
                 }
             }
 
             else
             {
-                this.Logger.LogWarning($"[Operation=InterepretFTApiResponse], Status=Failure, Message=Failure code received from PokeApi endpoint, mapping error");
+                this.Logger.LogWarning($"[Operation=InterepretFTApiResponse], Status=Failure, Message=Failure code received from TranslationAPI endpoint");
 
-                //todo
+                translationResponse.ResponseStatus.StatusCode = 500;
+                translationResponse.ResponseStatus.StatusMessage = "Failure code received from TranslationAPI endpoint";
             }
 
             return translationResponse;

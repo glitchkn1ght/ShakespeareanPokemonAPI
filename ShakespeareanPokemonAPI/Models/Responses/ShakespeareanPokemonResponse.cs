@@ -10,10 +10,6 @@ namespace ShakespeareanPokemonAPI.Models.Responses
 
     public class ShakespeareanPokemonResponse : BaseResponse
     {
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("description")]
-        public string ShakespeareanDescription { get; set; }
+        public ShakespeareanPokemon Pokemon { get; set; }
     }
 }

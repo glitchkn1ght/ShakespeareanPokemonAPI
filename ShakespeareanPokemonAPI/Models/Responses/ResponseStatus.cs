@@ -5,8 +5,12 @@
 
 namespace ShakespeareanPokemonAPI.Models.Responses
 {
-    public abstract class BaseResponse
+    public class ResponseStatus
     {
-        public ResponseStatus ResponseStatus { get; set; }
+        public bool IsSuccess { get; set; } = false;
+
+        public int StatusCode { get; set; }
+
+        public string StatusMessage { get; set; }
     }
 }

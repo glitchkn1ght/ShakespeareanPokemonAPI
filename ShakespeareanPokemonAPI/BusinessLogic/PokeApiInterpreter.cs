@@ -30,27 +30,27 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
 
         public async Task<PokeApiResponse> InterepretPokeApiResponse(HttpResponseMessage ApiResponse, string descriptionLanguage)
         {
-            PokeApiResponse pokemonResponse = new PokeApiResponse();
+            PokeApiResponse pokeApiResponse = new PokeApiResponse();
 
             if (ApiResponse.IsSuccessStatusCode)
             {
                 this.Logger.LogInformation($"[Operation=InterepretPokeApiResponse], Status=Success, Message=Success code received from PokeApi endpoint, mapping description.");
 
-                pokemonResponse = await this.DescriptionMapper.MapPokemonDescription(ApiResponse, descriptionLanguage);
+                pokeApiResponse = await this.DescriptionMapper.MapPokemonDescription(ApiResponse, descriptionLanguage);
 
-                if (!string.IsNullOrWhiteSpace(pokemonResponse.PokemonDescription))
+                if (!string.IsNullOrWhiteSpace(pokeApiResponse.PokemonDescription))
                 {
                     this.Logger.LogInformation($"[Operation=InterepretPokeApiResponse], Status=Success, Message=Successfully mapped description from response");
 
-                    pokemonResponse.IsSuccess = true;
+                    pokeApiResponse.ResponseStatus.IsSuccess = true;
                 }
 
                 else
                 {
                     this.Logger.LogWarning($"[Operation=InterepretPokeApiResponse], Status=Success, Message=Could not map description from response");
 
-                    pokemonResponse.StatusCode = 404;
-                    pokemonResponse.StatusMessage = "Pokemon was found on Api but no valid description could be mapped";
+                    pokeApiResponse.ResponseStatus.StatusCode = 404;
+                    pokeApiResponse.ResponseStatus.StatusMessage = "Pokemon was found on Api but no valid description could be mapped";
                 }
             }
 
@@ -58,10 +58,11 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
             {
                 this.Logger.LogWarning($"[Operation=InterepretPokeApiResponse], Status=Failure, Message=Failure code received from PokeApi endpoint, mapping error");
 
-                //todo
+                pokeApiResponse.ResponseStatus.StatusCode = (int)ApiResponse.StatusCode;
+                pokeApiResponse.ResponseStatus.StatusMessage = "Could not retrieve Pokemon from PokeApi";
             }
 
-            return pokemonResponse;
+            return pokeApiResponse;
         }
     }
 }

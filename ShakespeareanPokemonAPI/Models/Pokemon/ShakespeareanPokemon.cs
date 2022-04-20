@@ -5,8 +5,14 @@
 
 namespace ShakespeareanPokemonAPI.Models.Responses
 {
-    public abstract class BaseResponse
+    using Newtonsoft.Json;
+
+    public class ShakespeareanPokemon
     {
-        public ResponseStatus ResponseStatus { get; set; }
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        [JsonProperty("description")]
+        public string ShakespeareanDescription { get; set; }
     }
 }

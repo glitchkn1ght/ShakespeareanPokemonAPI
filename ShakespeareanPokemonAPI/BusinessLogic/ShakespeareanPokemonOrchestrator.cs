@@ -40,28 +40,28 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
 
             PokeApiResponse pokeApiResponse = await this.PokeApiService.GetPokemonFromApi(pokemonName);
 
-            if (!pokeApiResponse.IsSuccess)
+            if (!pokeApiResponse.ResponseStatus.IsSuccess)
             {
-                response.IsSuccess = false;
-                response.StatusCode = pokeApiResponse.StatusCode;
-                response.StatusMessage = pokeApiResponse.StatusMessage;
+                response.ResponseStatus.IsSuccess = false;
+                response.ResponseStatus.StatusCode = pokeApiResponse.ResponseStatus.StatusCode;
+                response.ResponseStatus.StatusMessage = pokeApiResponse.ResponseStatus.StatusMessage;
                 
                 return response;
             }
 
             TraslationResponse traslationResponse = await this.FTApiService.TranslatePokemonDescription(pokeApiResponse.PokemonDescription);
 
-            if(!traslationResponse.IsSuccess)
+            if(!traslationResponse.ResponseStatus.IsSuccess)
             {
-                response.IsSuccess = false;
-                response.StatusCode = traslationResponse.StatusCode;
-                response.StatusMessage = traslationResponse.StatusMessage;
+                response.ResponseStatus.IsSuccess = false;
+                response.ResponseStatus.StatusCode = traslationResponse.ResponseStatus.StatusCode;
+                response.ResponseStatus.StatusMessage = traslationResponse.ResponseStatus.StatusMessage;
 
                 return response; 
             }
 
-            response.Name = pokemonName;
-            response.ShakespeareanDescription = traslationResponse.TranslatedText;
+            response.Pokemon.Name = pokemonName;
+            response.Pokemon.ShakespeareanDescription = traslationResponse.TranslatedText;
 
             return response;
         }

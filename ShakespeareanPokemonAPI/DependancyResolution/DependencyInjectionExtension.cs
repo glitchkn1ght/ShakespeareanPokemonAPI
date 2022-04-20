@@ -14,6 +14,7 @@ namespace ShakespeareanPokemonAPI.DependancyResolution
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
+            services.AddScoped<IShakespeareanPokemonOrchestrator, ShakespeareanPokemonOrchestrator>();
             services.AddScoped<IPokeApiService, PokeApiService>();
             services.AddScoped<IPokemonDescriptionMapper, PokemonDescriptionMapper>();
             services.AddScoped<IPokeApiInterpreter, PokeApiInterpreter>();

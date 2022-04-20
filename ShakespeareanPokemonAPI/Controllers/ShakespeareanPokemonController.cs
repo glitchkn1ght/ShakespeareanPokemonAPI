@@ -27,7 +27,6 @@ namespace ShakespeareanPokemonAPI.Controllers
         {
             this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.ShakespeareanPokemonOrchestrator = shakespeareanPokemonOrchestrator ?? throw new ArgumentNullException(nameof(shakespeareanPokemonOrchestrator));
-
         }
 
         [HttpGet]
@@ -35,9 +34,14 @@ namespace ShakespeareanPokemonAPI.Controllers
         {
             try
             {
-                PokeApiResponse PokemonResponse = await this.ShakespeareanPokemonOrchestrator.GetShakespeareanPokemon(pokemonName);
+                ShakespeareanPokemonResponse response = await this.ShakespeareanPokemonOrchestrator.GetShakespeareanPokemon(pokemonName);
 
-                return new ObjectResult(PokemonResponse) { StatusCode = PokemonResponse.StatusCode};
+                if (response.ResponseStatus.IsSuccess)
+                {
+                   return new OkObjectResult(response.Pokemon);
+                }
+
+                return new ObjectResult(response.ResponseStatus);
             }
 
             catch(Exception ex)
