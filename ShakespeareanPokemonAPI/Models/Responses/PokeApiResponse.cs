@@ -8,10 +8,8 @@ namespace ShakespeareanPokemonAPI.Models.Responses
     using Newtonsoft.Json;
     using ShakespeareanPokemonAPI.Models.Responses;
 
-    public class PokeResponse : BaseResponse
+    public class PokeApiResponse : BaseResponse
     {
-        public string PokemonName { get; set; }
-
         public string PokemonDescription { get; set; }
     }
 }

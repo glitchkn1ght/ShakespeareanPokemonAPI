@@ -14,7 +14,7 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
 
     public interface IPokeApiInterpreter
     {
-        public Task<PokeResponse> InterepretPokeApiResponse(HttpResponseMessage pokeApiResponse, string descriptionLanguage);
+        public Task<PokeApiResponse> InterepretPokeApiResponse(HttpResponseMessage pokeApiResponse, string descriptionLanguage);
     }
 
     public class PokeApiInterpreter : IPokeApiInterpreter
@@ -28,9 +28,9 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
             this.DescriptionMapper = descriptionMapper ?? throw new ArgumentNullException(nameof(descriptionMapper));
         }
 
-        public async Task<PokeResponse> InterepretPokeApiResponse(HttpResponseMessage ApiResponse, string descriptionLanguage)
+        public async Task<PokeApiResponse> InterepretPokeApiResponse(HttpResponseMessage ApiResponse, string descriptionLanguage)
         {
-            PokeResponse pokemonResponse = new PokeResponse();
+            PokeApiResponse pokemonResponse = new PokeApiResponse();
 
             if (ApiResponse.IsSuccessStatusCode)
             {

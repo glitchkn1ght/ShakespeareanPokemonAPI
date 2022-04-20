@@ -13,7 +13,7 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
 
     public interface IShakespeareanPokemonOrchestrator
     {
-        public Task<PokeResponse> GetShakespeareanPokemon(string PokemonName);
+        public Task<ShakespeareanPokemonResponse> GetShakespeareanPokemon(string PokemonName);
     }
 
     public class ShakespeareanPokemonOrchestrator : IShakespeareanPokemonOrchestrator
@@ -34,9 +34,36 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
             this.PokeApiService = pokeApiService ?? throw new ArgumentNullException(nameof(pokeApiService));
         }
 
-        public async Task<PokeResponse> GetShakespeareanPokemon(string PokemonName)
+        public async Task<ShakespeareanPokemonResponse> GetShakespeareanPokemon(string pokemonName)
         {
-            return new PokeResponse();
+            ShakespeareanPokemonResponse response = new ShakespeareanPokemonResponse();
+
+            PokeApiResponse pokeApiResponse = await this.PokeApiService.GetPokemonFromApi(pokemonName);
+
+            if (!pokeApiResponse.IsSuccess)
+            {
+                response.IsSuccess = false;
+                response.StatusCode = pokeApiResponse.StatusCode;
+                response.StatusMessage = pokeApiResponse.StatusMessage;
+                
+                return response;
+            }
+
+            TraslationResponse traslationResponse = await this.FTApiService.TranslatePokemonDescription(pokeApiResponse.PokemonDescription);
+
+            if(!traslationResponse.IsSuccess)
+            {
+                response.IsSuccess = false;
+                response.StatusCode = traslationResponse.StatusCode;
+                response.StatusMessage = traslationResponse.StatusMessage;
+
+                return response; 
+            }
+
+            response.Name = pokemonName;
+            response.ShakespeareanDescription = traslationResponse.TranslatedText;
+
+            return response;
         }
     }
 }

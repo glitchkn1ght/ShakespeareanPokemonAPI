@@ -14,18 +14,16 @@ namespace ShakespeareanPokemonAPI.Mappers
 
     public interface IPokemonDescriptionMapper
     {
-        public Task<PokeResponse> MapPokemonDescription(HttpResponseMessage httpResponse, string descriptionLanguage);
+        public Task<PokeApiResponse> MapPokemonDescription(HttpResponseMessage httpResponse, string descriptionLanguage);
     }
 
     public class PokemonDescriptionMapper : IPokemonDescriptionMapper
     {
-        public async Task<PokeResponse> MapPokemonDescription(HttpResponseMessage httpResponse, string descriptionLanguage)
+        public async Task<PokeApiResponse> MapPokemonDescription(HttpResponseMessage httpResponse, string descriptionLanguage)
         {
-            PokeResponse mappedResponse = new PokeResponse();
+            PokeApiResponse mappedResponse = new PokeApiResponse();
 
             PokemonSpecies pokemon = JsonConvert.DeserializeObject<PokemonSpecies>(await httpResponse.Content.ReadAsStringAsync());
-
-            mappedResponse.PokemonName = pokemon.Name;
 
             string rawDescription = pokemon.FlavorTextEntries.Where(x => x.Language.Name.ToUpper() == descriptionLanguage).FirstOrDefault()?.FlavorText;
 

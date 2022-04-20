@@ -17,7 +17,7 @@ namespace ShakespeareanPokemonAPI.Services
 
     public interface IPokeApiService
     {
-        public Task<PokeResponse> GetPokemonFromApi(string pokemonName);
+        public Task<PokeApiResponse> GetPokemonFromApi(string pokemonName);
     }
 
     public class PokeApiService : IPokeApiService
@@ -36,13 +36,13 @@ namespace ShakespeareanPokemonAPI.Services
             this.PokeApiInterpreter = pokeApiInterpreter;
         }
 
-        public async Task<PokeResponse> GetPokemonFromApi(string pokemonName)
+        public async Task<PokeApiResponse> GetPokemonFromApi(string pokemonName)
         {
             var resource = $"{PokeApiConfigSettings.PokemonResourceUrl}/{pokemonName}";
 
             this.Logger.LogInformation($"[Operation=GetPokemonFromApi], Status=Success, Message=Calling to PokeApi at {this.Client.BaseAddress+resource}");
 
-            PokeResponse pokeResponse = await this.PokeApiInterpreter.InterepretPokeApiResponse(await this.Client.GetAsync(resource), PokeApiConfigSettings.DescriptionLanguage);
+            PokeApiResponse pokeResponse = await this.PokeApiInterpreter.InterepretPokeApiResponse(await this.Client.GetAsync(resource), PokeApiConfigSettings.DescriptionLanguage);
 
             return pokeResponse;
         }

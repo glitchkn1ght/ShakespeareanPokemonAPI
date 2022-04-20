@@ -35,7 +35,7 @@ namespace ShakespeareanPokemonAPI.Controllers
         {
             try
             {
-                PokeResponse PokemonResponse = await this.ShakespeareanPokemonOrchestrator.GetShakespeareanPokemon(pokemonName);
+                PokeApiResponse PokemonResponse = await this.ShakespeareanPokemonOrchestrator.GetShakespeareanPokemon(pokemonName);
 
                 return new ObjectResult(PokemonResponse) { StatusCode = PokemonResponse.StatusCode};
             }
