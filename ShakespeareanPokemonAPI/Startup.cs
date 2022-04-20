@@ -39,7 +39,8 @@ namespace ShakespeareanPokemonAPI
                 c.IncludeXmlComments(xmlPath);
             });
 
-           services.AddHttpClient<IPokeApiService>();
+            services.AddHttpClient<IPokeApiService>();
+            services.AddHttpClient<IFunTranslationsApiService>();
 
             var pokeApiSettings = Configuration.GetSection("PokeApi");
             services.Configure<ConfigSettingsPokeAPI>(pokeApiSettings);
@@ -62,7 +63,7 @@ namespace ShakespeareanPokemonAPI
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "weather");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "ShakespeareanPokemon");
                 c.RoutePrefix = string.Empty;
             });
 

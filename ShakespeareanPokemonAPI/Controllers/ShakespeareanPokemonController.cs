@@ -5,6 +5,7 @@
 
 namespace ShakespeareanPokemonAPI.Controllers
 {
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using ShakespeareanPokemonAPI.BusinessLogic;
@@ -29,7 +30,20 @@ namespace ShakespeareanPokemonAPI.Controllers
             this.ShakespeareanPokemonOrchestrator = shakespeareanPokemonOrchestrator ?? throw new ArgumentNullException(nameof(shakespeareanPokemonOrchestrator));
         }
 
+        /// <summary> Gets the pokemons name and it's flavour text translated into shakespearean</summary>
+        /// <param name="pokemonName"> The name of the pokemon you wish to retrieve data for</param>
+        /// <response code="200">Returns the pokemons data.</response>
+        /// <response code="400">If the request parameters are malformed.</response>
+        /// <response code="404">If the request URL on eiter of the Apis cannot be found on the server.</response>  
+        /// <response code="403">If you have exceeded the usage limit on TranslationApi</response>  
+        /// <response code="500">Interanl application Error.</response>  
+
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ShakespeareanPokemon))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseStatus))]
+        [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ResponseStatus))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResponseStatus))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ResponseStatus))]
         public async Task<IActionResult> Get(string pokemonName)
         {
             try

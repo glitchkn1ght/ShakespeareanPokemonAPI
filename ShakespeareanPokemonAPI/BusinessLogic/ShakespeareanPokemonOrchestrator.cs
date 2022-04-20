@@ -5,7 +5,6 @@
 
 namespace ShakespeareanPokemonAPI.BusinessLogic
 {
-    using Microsoft.Extensions.Logging;
     using ShakespeareanPokemonAPI.Models.Responses;
     using ShakespeareanPokemonAPI.Services;
     using System;
