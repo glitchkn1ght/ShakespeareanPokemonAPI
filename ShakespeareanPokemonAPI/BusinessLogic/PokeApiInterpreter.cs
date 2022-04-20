@@ -43,6 +43,7 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
                     this.Logger.LogInformation($"[Operation=InterepretPokeApiResponse], Status=Success, Message=Successfully mapped description from response");
 
                     pokeApiResponse.ResponseStatus.IsSuccess = true;
+                    pokeApiResponse.ResponseStatus.StatusCode = 200;
                 }
 
                 else

@@ -5,13 +5,12 @@
 
 namespace ShakespeareanPokemonAPI_UnitTests.MapperTests
 {
-    using PokeApiNet;
+    using Newtonsoft.Json;
     using NUnit.Framework;
-    using Moq;
+    using PokeApiNet;
+    using ShakespeareanPokemonAPI.Mappers;
     using System.Collections.Generic;
     using System.Net.Http;
-    using Newtonsoft.Json;
-    using ShakespeareanPokemonAPI.Mappers;
 
     public class PokemonDescriptionMapperTests
     {
