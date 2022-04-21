@@ -1,0 +1,34 @@
+{
+	"info": {
+		"_postman_id": "ef509c76-81b3-49a1-8ae3-ef119f656e2c",
+		"name": "TrueLayer-ShakespeareanPokemonApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetShakeSpearianPokemon",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44396/Pokemon?pokemonName=ditto",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44396",
+					"path": [
+						"Pokemon"
+					],
+					"query": [
+						{
+							"key": "pokemonName",
+							"value": "ditto"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
