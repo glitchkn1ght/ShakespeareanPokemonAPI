@@ -97,6 +97,30 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
             Assert.AreEqual(expectedResponse.Pokemon.ShakespeareanDescription, ((ShakespeareanPokemon)actual.Value).ShakespeareanDescription);
         }
 
+        [TestCase(404,"Not Found")]
+        [TestCase(400, "Bad Request")]
+        [TestCase(403, "Too many requests, try again in an hour.")]
+        [TestCase(403, "Some internal error.")]
+        public void WhenOrchestratorNonSuccess_ThenReturnFailureCodeAndMessage(int retCode, string retMessage)
+        {
+            ShakespeareanPokemonResponse expectedResponse = new ShakespeareanPokemonResponse()
+            {
+                ResponseStatus = new ResponseStatus()
+                {
+                    IsSuccess = false,
+                    StatusCode = retCode,
+                    StatusMessage = retMessage
+                }
+            };
+
+            this.shakespeareanPokemonOrchestratorMock.Setup(x => x.GetShakespeareanPokemon("Psyduck")).Returns(Task.FromResult(expectedResponse));
+
+            ObjectResult actual = (ObjectResult)this.shakespeareanPokemonController.Get("Psyduck").Result;
+
+            Assert.AreEqual(expectedResponse.ResponseStatus.StatusCode, actual.StatusCode);
+            Assert.AreEqual(expectedResponse.ResponseStatus.StatusMessage, ((ResponseStatus)actual.Value).StatusMessage);
+        }
+
         [Test]
         public void WhenExceptionThrown_ThenReturnInternalServerError()
         {
