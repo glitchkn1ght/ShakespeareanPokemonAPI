@@ -42,7 +42,7 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
 
                 if (!string.IsNullOrWhiteSpace(translationResponse.ReturnedText))
                 {
-                    this.Logger.LogInformation($"[Operation=InterepretFTApiResponse], Status=Success, Message=Successfully mapped translation from response");
+                    this.Logger.LogInformation($"[Operation=InterepretFTApiResponse], Status=Success, Message=Successfully mapped translation from response.");
 
                     translationResponse.ResponseStatus.StatusCode = 200;
                     translationResponse.ResponseStatus.IsSuccess = true;
@@ -50,21 +50,21 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
 
                 else
                 {
-                    this.Logger.LogWarning($"[Operation=InterepretFTApiResponse], Status=Failure, Message=Could not map translation from response");
+                    this.Logger.LogWarning($"[Operation=InterepretFTApiResponse], Status=Failure, Message=Could not map translation from response.");
 
                     translationResponse.ResponseStatus.StatusCode = 500;
-                    translationResponse.ResponseStatus.StatusMessage = "TranslationApi call was sucessful but no description could be mapped";
+                    translationResponse.ResponseStatus.StatusMessage = "Call to TranslationApi was sucessful but no description could be mapped.";
                 }
             }
 
             else
             {
-                this.Logger.LogWarning($"[Operation=InterepretFTApiResponse], Status=Failure, Message=Failure code received from TranslationAPI endpoint");
-
                 Error error = JsonConvert.DeserializeObject<Error>(await ApiResponse.Content.ReadAsStringAsync());
 
                 translationResponse.ResponseStatus.StatusCode = error.ErrorDetail.Code;
                 translationResponse.ResponseStatus.StatusMessage = error.ErrorDetail.Message;
+
+                this.Logger.LogWarning($"[Operation=InterepretFTApiResponse], Status=Failure, Message=Failure code received from TranslationAPI endpoint. Details: {error.ErrorDetail.Code},{error.ErrorDetail.Message} ");
             }
 
             return translationResponse;

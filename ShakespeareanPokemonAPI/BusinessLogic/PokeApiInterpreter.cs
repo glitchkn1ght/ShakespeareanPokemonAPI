@@ -40,7 +40,7 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
 
                 if (!string.IsNullOrWhiteSpace(pokeApiResponse.ReturnedText))
                 {
-                    this.Logger.LogInformation($"[Operation=InterepretPokeApiResponse], Status=Success, Message=Successfully mapped description from response");
+                    this.Logger.LogInformation($"[Operation=InterepretPokeApiResponse], Status=Success, Message=Successfully mapped description from response.");
 
                     pokeApiResponse.ResponseStatus.StatusCode = 200;
                     pokeApiResponse.ResponseStatus.IsSuccess = true;
@@ -48,19 +48,19 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
 
                 else
                 {
-                    this.Logger.LogWarning($"[Operation=InterepretPokeApiResponse], Status=Failure, Message=Could not map description from response");
+                    this.Logger.LogWarning($"[Operation=InterepretPokeApiResponse], Status=Failure, Message=Could not map description from response.");
 
                     pokeApiResponse.ResponseStatus.StatusCode = 500;
-                    pokeApiResponse.ResponseStatus.StatusMessage = "Pokemon was found on Api but no valid description could be mapped";
+                    pokeApiResponse.ResponseStatus.StatusMessage = "Pokemon was found on PokeApi but no valid description could be mapped.";
                 }
             }
 
             else
             {
-                this.Logger.LogWarning($"[Operation=InterepretPokeApiResponse], Status=Failure, Message=Failure code received from PokeApi endpoint, mapping error");
+                this.Logger.LogWarning($"[Operation=InterepretPokeApiResponse], Status=Failure, Message=Failure code received from PokeApi endpoint. Code: {ApiResponse.StatusCode}");
 
                 pokeApiResponse.ResponseStatus.StatusCode = (int)ApiResponse.StatusCode;
-                pokeApiResponse.ResponseStatus.StatusMessage = "Could not retrieve Pokemon from PokeApi";
+                pokeApiResponse.ResponseStatus.StatusMessage = "Could not retrieve Pokemon from PokeApi endpoint.";
             }
 
             return pokeApiResponse;
