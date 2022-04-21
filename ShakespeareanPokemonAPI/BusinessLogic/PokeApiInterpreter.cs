@@ -44,7 +44,6 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
 
                     pokeApiResponse.ResponseStatus.StatusCode = 200;
                     pokeApiResponse.ResponseStatus.IsSuccess = true;
-
                 }
 
                 else

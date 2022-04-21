@@ -1,0 +1,4 @@
+2022-04-21 16:09:23.136 +00:00 [INF] [Operation=ShakespeareanPokemonController(Get)], Status=Success, Message=Attempting to retrieve and map description for pokemon ditto
+2022-04-21 16:09:23.167 +00:00 [INF] [Operation=GetPokemonFromApi], Status=Success, Message=Calling to PokeApi at https://pokeapi.co/api/v2/pokemon-speciess/ditto
+2022-04-21 16:09:24.775 +00:00 [WRN] [Operation=InterepretPokeApiResponse], Status=Failure, Message=Failure code received from PokeApi endpoint, mapping error
+2022-04-21 16:09:24.776 +00:00 [WRN] [Operation=ShakespeareanPokemonController(Get)], Status=Failure, Message=Unable to retrieve and map description for pokemon ditto, details: ShakespeareanPokemonAPI.Models.Responses.ResponseStatus
