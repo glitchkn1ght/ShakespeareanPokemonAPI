@@ -27,11 +27,6 @@ namespace ShakespeareanPokemonAPI.Mappers
 
             string translatedText = translation?.TranslationContents?.TranslatedText;
 
-            if (!string.IsNullOrEmpty(translatedText))
-            {
-                translatedText = translatedText.Replace("\n", " ").Replace("\f", " ").Trim();
-            }
-
             return translatedText;
         }
     }
