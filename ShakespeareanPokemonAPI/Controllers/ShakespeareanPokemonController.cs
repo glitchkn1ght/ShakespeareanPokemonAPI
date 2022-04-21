@@ -66,9 +66,9 @@ namespace ShakespeareanPokemonAPI.Controllers
 
             catch(Exception ex)
             {
-                this.Logger.LogError($"[Operation=ShakespeareanPokemonController(Get)], Status=Failed, Message=Exeception thrown");
+                this.Logger.LogError($"[Operation=ShakespeareanPokemonController(Get)], Status=Failed, Message=Exeception thrown, Details: {ex.Message}");
 
-                return new ObjectResult(ex) { StatusCode = 500 };
+                return new ObjectResult("Internal Application Error Has Occurred") { StatusCode = 500 };
             }
         }
     }

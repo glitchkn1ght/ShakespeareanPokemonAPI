@@ -5,18 +5,13 @@
 
 namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
 {
-    using Microsoft.Extensions.Logging;
     using Moq;
-    using Newtonsoft.Json;
     using NUnit.Framework;
     using ShakespeareanPokemonAPI.BusinessLogic;
-    using ShakespeareanPokemonAPI.Mappers;
-    using ShakespeareanPokemonAPI.Models.FunTranslationsApi;
     using ShakespeareanPokemonAPI.Models.Responses;
-    using System;
-    using System.Net.Http;
-    using System.Threading.Tasks;
     using ShakespeareanPokemonAPI.Services;
+    using System;
+    using System.Threading.Tasks;
 
     public class ShakespeareanPokemonOrchestratorTests
     {
