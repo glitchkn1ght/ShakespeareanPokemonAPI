@@ -16,7 +16,7 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
 
     public interface IFunTranslationsApiInterepreter
     {
-        public Task<TraslationResponse> InterepretFTApiResponse(HttpResponseMessage ApiResponse);
+        public Task<TranslationResponse> InterepretFTApiResponse(HttpResponseMessage ApiResponse);
     }
 
     public class FunTranslationsApiInterepreter : IFunTranslationsApiInterepreter
@@ -30,27 +30,27 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
             this.TranslationMapper = translationMapper ?? throw new ArgumentNullException(nameof(translationMapper));
         }
 
-        public async Task<TraslationResponse> InterepretFTApiResponse(HttpResponseMessage ApiResponse)
+        public async Task<TranslationResponse> InterepretFTApiResponse(HttpResponseMessage ApiResponse)
         {
-            TraslationResponse translationResponse = new TraslationResponse();
+            TranslationResponse translationResponse = new TranslationResponse();
 
             if (ApiResponse.IsSuccessStatusCode)
             {
                 this.Logger.LogInformation($"[Operation=InterepretFTApiResponse], Status=Success, Message=Success code received from FunTranslations endpoint, mapping translation.");
 
-                Translation translation = await this.TranslationMapper.MapTranslation(ApiResponse);
+                translationResponse.TranslatedText = await this.TranslationMapper.MapTranslation(ApiResponse);
 
-                if (!string.IsNullOrWhiteSpace(translation?.TranslationContents?.TranslatedText))
+                if (!string.IsNullOrWhiteSpace(translationResponse.TranslatedText))
                 {
                     this.Logger.LogInformation($"[Operation=InterepretFTApiResponse], Status=Success, Message=Successfully mapped translation from response");
 
-                    translationResponse.TranslatedText = translation.TranslationContents.TranslatedText;
+                    translationResponse.ResponseStatus.StatusCode = 200;
                     translationResponse.ResponseStatus.IsSuccess = true;
                 }
 
                 else
                 {
-                    this.Logger.LogWarning($"[Operation=InterepretFTApiResponse], Status=Success, Message=Could not map translation from response");
+                    this.Logger.LogWarning($"[Operation=InterepretFTApiResponse], Status=Failure, Message=Could not map translation from response");
 
                     translationResponse.ResponseStatus.StatusCode = 500;
                     translationResponse.ResponseStatus.StatusMessage = "TranslationApi call was sucessful but no description could be mapped";

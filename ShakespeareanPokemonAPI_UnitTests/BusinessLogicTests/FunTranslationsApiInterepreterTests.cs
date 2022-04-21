@@ -7,27 +7,28 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
 {
     using Microsoft.Extensions.Logging;
     using Moq;
+    using Newtonsoft.Json;
     using NUnit.Framework;
     using ShakespeareanPokemonAPI.BusinessLogic;
     using ShakespeareanPokemonAPI.Mappers;
+    using ShakespeareanPokemonAPI.Models.FunTranslationsApi;
     using ShakespeareanPokemonAPI.Models.Responses;
     using System;
     using System.Net.Http;
     using System.Threading.Tasks;
 
-    public class PokeApiInterpreterTests
+    public class FunTranslationsApiInterepreterTests
     {
-        private Mock<ILogger<PokeApiInterpreter>> LoggerMock;
-        private PokeApiInterpreter pokeApiInterpreter;
-        private Mock<IPokemonDescriptionMapper> pokemonDescriptionMapperMock;
-
+        private Mock<ILogger<FunTranslationsApiInterepreter>> LoggerMock;
+        private FunTranslationsApiInterepreter funTranslationsApiInterepreter;
+        private Mock<ITranslationMapper> shakespeareTranslationMapperMock;
 
         [SetUp]
         public void Setup()
         {
-            this.LoggerMock = new Mock<ILogger<PokeApiInterpreter>>();
-            this.pokemonDescriptionMapperMock = new Mock<IPokemonDescriptionMapper>();
-            this.pokeApiInterpreter = new PokeApiInterpreter(this.LoggerMock.Object, this.pokemonDescriptionMapperMock.Object);
+            this.LoggerMock = new Mock<ILogger<FunTranslationsApiInterepreter>>();
+            this.shakespeareTranslationMapperMock = new Mock<ITranslationMapper>();
+            this.funTranslationsApiInterepreter = new FunTranslationsApiInterepreter(this.LoggerMock.Object, this.shakespeareTranslationMapperMock.Object);
         }
 
         [Test]
@@ -36,10 +37,10 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
             Assert.Throws(
                 Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo("logger"), delegate
                 {
-                    this.pokeApiInterpreter = new PokeApiInterpreter
+                    this.funTranslationsApiInterepreter = new FunTranslationsApiInterepreter
                     (
                         null,
-                        this.pokemonDescriptionMapperMock.Object
+                        this.shakespeareTranslationMapperMock.Object
                     );
                 });
         }
@@ -48,9 +49,9 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
         public void WhenConstructorCalledWithNullMapper_ThenArgNullExceptionThrown()
         {
             Assert.Throws(
-                Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo("descriptionMapper"), delegate
+                Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo("translationMapper"), delegate
                 {
-                    this.pokeApiInterpreter = new PokeApiInterpreter
+                    this.funTranslationsApiInterepreter = new FunTranslationsApiInterepreter
                     (
                         this.LoggerMock.Object,
                         null
@@ -64,10 +65,10 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
             Assert.DoesNotThrow(
                 delegate
                 {
-                    this.pokeApiInterpreter = new PokeApiInterpreter
+                    this.funTranslationsApiInterepreter = new FunTranslationsApiInterepreter
                     (
                         this.LoggerMock.Object,
-                        this.pokemonDescriptionMapperMock.Object
+                        this.shakespeareTranslationMapperMock.Object
                     );
                 });
         }
@@ -77,17 +78,17 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
         {
             HttpResponseMessage msg = new HttpResponseMessage { Content = null, StatusCode = System.Net.HttpStatusCode.OK };
 
-            this.pokemonDescriptionMapperMock.Setup(x => x.MapPokemonDescription(msg, It.IsAny<string>())).Returns(Task.FromResult(retString));
+            this.shakespeareTranslationMapperMock.Setup(x => x.MapTranslation(msg)).Returns(Task.FromResult(retString));
 
             ResponseStatus expected = new ResponseStatus
             {
                 StatusCode = 200,
             };
 
-            PokeApiResponse actual = this.pokeApiInterpreter.InterepretPokeApiResponse(msg, It.IsAny<string>()).Result;
+            TranslationResponse actual = this.funTranslationsApiInterepreter.InterepretFTApiResponse(msg).Result;
 
             Assert.AreEqual(expected.StatusCode, actual.ResponseStatus.StatusCode);
-            Assert.AreEqual("somedescription", actual.PokemonDescription);
+            Assert.AreEqual("somedescription", actual.TranslatedText);
         }
 
         [TestCase("  ")]
@@ -97,33 +98,40 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
         {            
             HttpResponseMessage msg = new HttpResponseMessage { Content = null, StatusCode = System.Net.HttpStatusCode.OK};
 
-            this.pokemonDescriptionMapperMock.Setup(x => x.MapPokemonDescription(msg, It.IsAny<string>())).Returns(Task.FromResult(retString));
+            this.shakespeareTranslationMapperMock.Setup(x => x.MapTranslation(msg)).Returns(Task.FromResult(retString));
 
             ResponseStatus expected = new ResponseStatus
             {
                 StatusCode = 500,
-                StatusMessage = "Pokemon was found on Api but no valid description could be mapped"
+                StatusMessage = "TranslationApi call was sucessful but no description could be mapped"
             };
 
-            PokeApiResponse actual = this.pokeApiInterpreter.InterepretPokeApiResponse(msg, It.IsAny<string>()).Result;
+            TranslationResponse actual = this.funTranslationsApiInterepreter.InterepretFTApiResponse(msg).Result;
 
             Assert.AreEqual(expected.StatusCode, actual.ResponseStatus.StatusCode);
             Assert.AreEqual(expected.StatusMessage, actual.ResponseStatus.StatusMessage);
         }
 
-        [TestCase(400)]
-        [TestCase(403)]
-        public void WhenNonSuccessCodeReceived_ThenInterpreterReturnsApiCode(int retCode)
+        [TestCase(400, "Bad request text is missing")]
+        [TestCase(403, "Too many requests, try again in an hour")]
+        public void WhenNonSuccessCodeReceived_ThenInterpreterReturnsApiCodeAndMessage(int retCode, string retMsg)
         {
-            HttpResponseMessage msg = new HttpResponseMessage { Content = null, StatusCode = (System.Net.HttpStatusCode)retCode };
+            Error error = new Error()
+            {
+                ErrorDetail = new ErrorDetail() { Code = retCode, Message = retMsg }
+            };
+
+            HttpContent content = new StringContent(JsonConvert.SerializeObject(error));
+
+            HttpResponseMessage msg = new HttpResponseMessage { Content = content, StatusCode = (System.Net.HttpStatusCode)retCode };
 
             ResponseStatus expected = new ResponseStatus
             {
                 StatusCode = retCode,
-                StatusMessage = "Could not retrieve Pokemon from PokeApi"
+                StatusMessage = retMsg
             };
 
-            PokeApiResponse actual = this.pokeApiInterpreter.InterepretPokeApiResponse(msg, It.IsAny<string>()).Result;
+            TranslationResponse actual = this.funTranslationsApiInterepreter.InterepretFTApiResponse(msg).Result;
 
             Assert.AreEqual(expected.StatusCode, actual.ResponseStatus.StatusCode);
             Assert.AreEqual(expected.StatusMessage, actual.ResponseStatus.StatusMessage);

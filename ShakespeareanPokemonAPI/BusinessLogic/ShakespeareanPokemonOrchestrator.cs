@@ -44,7 +44,7 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
                 return response;
             }
 
-            TraslationResponse traslationResponse = await this.FTApiService.TranslatePokemonDescription(pokeApiResponse.PokemonDescription);
+            TranslationResponse traslationResponse = await this.FTApiService.TranslatePokemonDescription(pokeApiResponse.PokemonDescription);
 
             if(!traslationResponse.ResponseStatus.IsSuccess)
             {

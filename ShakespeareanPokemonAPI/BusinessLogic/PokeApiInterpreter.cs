@@ -42,15 +42,16 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
                 {
                     this.Logger.LogInformation($"[Operation=InterepretPokeApiResponse], Status=Success, Message=Successfully mapped description from response");
 
-                    pokeApiResponse.ResponseStatus.IsSuccess = true;
                     pokeApiResponse.ResponseStatus.StatusCode = 200;
+                    pokeApiResponse.ResponseStatus.IsSuccess = true;
+
                 }
 
                 else
                 {
-                    this.Logger.LogWarning($"[Operation=InterepretPokeApiResponse], Status=Success, Message=Could not map description from response");
+                    this.Logger.LogWarning($"[Operation=InterepretPokeApiResponse], Status=Failure, Message=Could not map description from response");
 
-                    pokeApiResponse.ResponseStatus.StatusCode = 404;
+                    pokeApiResponse.ResponseStatus.StatusCode = 500;
                     pokeApiResponse.ResponseStatus.StatusMessage = "Pokemon was found on Api but no valid description could be mapped";
                 }
             }

@@ -21,7 +21,7 @@ namespace ShakespeareanPokemonAPI.Services
 
     public interface IFunTranslationsApiService
     {
-        public Task<TraslationResponse> TranslatePokemonDescription(string descriptionInModernEnglish);
+        public Task<TranslationResponse> TranslatePokemonDescription(string descriptionInModernEnglish);
     }
 
     public class FunTranslationsApiService : IFunTranslationsApiService
@@ -40,7 +40,7 @@ namespace ShakespeareanPokemonAPI.Services
             this.FTApiInterpreter = ftApiInterpreter;
         }
 
-        public async Task<TraslationResponse> TranslatePokemonDescription(string descriptionInModernEnglish)
+        public async Task<TranslationResponse> TranslatePokemonDescription(string descriptionInModernEnglish)
         {
             var resource = $"{FTApiConfigSettings.ShakespeareTranslateResourceUrl}";
 
@@ -49,7 +49,7 @@ namespace ShakespeareanPokemonAPI.Services
 
             this.Logger.LogInformation($"[Operation=TranslatePokemonDescription], Status=Success, Message=Calling to FunTranslationsApi at {this.Client.BaseAddress+resource}");
 
-            TraslationResponse translationResponse = await this.FTApiInterpreter.InterepretFTApiResponse(await this.Client.PostAsync(resource,data));
+            TranslationResponse translationResponse = await this.FTApiInterpreter.InterepretFTApiResponse(await this.Client.PostAsync(resource,data));
 
             return translationResponse;
         }

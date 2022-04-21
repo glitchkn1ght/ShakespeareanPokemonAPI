@@ -12,20 +12,27 @@ namespace ShakespeareanPokemonAPI.Mappers
 
     public interface ITranslationMapper
     {
-        public Task<Translation> MapTranslation(HttpResponseMessage httpResponse);
+        public Task<string> MapTranslation(HttpResponseMessage httpResponse);
     }
 
     public class ShakespeareTranslationMapper : ITranslationMapper
     {
-        public async Task<Translation> MapTranslation(HttpResponseMessage httpResponse)
+        public async Task<string> MapTranslation(HttpResponseMessage httpResponse)
         {
             Translation translation = new Translation();
 
-            translation = JsonConvert.DeserializeObject<Translation>(await httpResponse.Content.ReadAsStringAsync());
+            var settings = new JsonSerializerSettings { Error = (se, ev) => { ev.ErrorContext.Handled = true; } };
 
-            translation.TranslationContents.TranslatedText = translation.TranslationContents.TranslatedText.Replace("\n", " ").Replace("\f"," ");
+            translation = JsonConvert.DeserializeObject<Translation>(await httpResponse.Content.ReadAsStringAsync(), settings);
 
-            return translation;
+            string translatedText = translation?.TranslationContents?.TranslatedText;
+
+            if (!string.IsNullOrEmpty(translatedText))
+            {
+                translatedText = translatedText.Replace("\n", " ").Replace("\f", " ").Trim();
+            }
+
+            return translatedText;
         }
     }
 }

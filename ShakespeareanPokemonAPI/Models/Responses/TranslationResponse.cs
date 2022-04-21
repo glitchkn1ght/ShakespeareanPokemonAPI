@@ -5,7 +5,7 @@
 
 namespace ShakespeareanPokemonAPI.Models.Responses
 {
-    public class TraslationResponse : BaseResponse
+    public class TranslationResponse : BaseResponse
     {
         public string TranslatedText { get; set; }
     }
