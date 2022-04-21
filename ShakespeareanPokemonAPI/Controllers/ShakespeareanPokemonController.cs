@@ -36,7 +36,7 @@ namespace ShakespeareanPokemonAPI.Controllers
         /// <response code="400">If the request parameters are malformed.</response>
         /// <response code="404">If the request URL on eiter of the Apis cannot be found on the server.</response>  
         /// <response code="403">If you have exceeded the usage limit on TranslationApi</response>  
-        /// <response code="500">Interanl application Error.</response>  
+        /// <response code="500">Internal application Error.</response>  
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ShakespeareanPokemon))]

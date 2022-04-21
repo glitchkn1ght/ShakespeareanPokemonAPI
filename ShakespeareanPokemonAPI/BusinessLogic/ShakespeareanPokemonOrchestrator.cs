@@ -34,7 +34,7 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
         {
             ShakespeareanPokemonResponse response = new ShakespeareanPokemonResponse();
 
-            PokeApiResponse pokeApiResponse = await this.PokeApiService.GetPokemonFromApi(pokemonName);
+            ServiceResponse pokeApiResponse = await this.PokeApiService.GetPokemonFromApi(pokemonName);
 
             if (!pokeApiResponse.ResponseStatus.IsSuccess)
             {
@@ -44,7 +44,7 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
                 return response;
             }
 
-            TranslationResponse traslationResponse = await this.FTApiService.TranslatePokemonDescription(pokeApiResponse.PokemonDescription);
+            ServiceResponse traslationResponse = await this.FTApiService.TranslatePokemonDescription(pokeApiResponse.ReturnedText);
 
             if(!traslationResponse.ResponseStatus.IsSuccess)
             {
@@ -55,8 +55,9 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
             }
 
             response.ResponseStatus.IsSuccess = true;
+            response.ResponseStatus.StatusCode = 200;
             response.Pokemon.Name = pokemonName;
-            response.Pokemon.ShakespeareanDescription = traslationResponse.TranslatedText;
+            response.Pokemon.ShakespeareanDescription = traslationResponse.ReturnedText;
 
             return response;
         }

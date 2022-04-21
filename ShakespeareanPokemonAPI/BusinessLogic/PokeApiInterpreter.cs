@@ -14,7 +14,7 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
 
     public interface IPokeApiInterpreter
     {
-        public Task<PokeApiResponse> InterepretPokeApiResponse(HttpResponseMessage pokeApiResponse, string descriptionLanguage);
+        public Task<ServiceResponse> InterepretPokeApiResponse(HttpResponseMessage pokeApiResponse, string descriptionLanguage);
     }
 
     public class PokeApiInterpreter : IPokeApiInterpreter
@@ -28,17 +28,17 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
             this.DescriptionMapper = descriptionMapper ?? throw new ArgumentNullException(nameof(descriptionMapper));
         }
 
-        public async Task<PokeApiResponse> InterepretPokeApiResponse(HttpResponseMessage ApiResponse, string descriptionLanguage)
+        public async Task<ServiceResponse> InterepretPokeApiResponse(HttpResponseMessage ApiResponse, string descriptionLanguage)
         {
-            PokeApiResponse pokeApiResponse = new PokeApiResponse();
+            ServiceResponse pokeApiResponse = new ServiceResponse();
 
             if (ApiResponse.IsSuccessStatusCode)
             {
                 this.Logger.LogInformation($"[Operation=InterepretPokeApiResponse], Status=Success, Message=Success code received from PokeApi endpoint, mapping description.");
 
-                pokeApiResponse.PokemonDescription = await this.DescriptionMapper.MapPokemonDescription(ApiResponse, descriptionLanguage);
+                pokeApiResponse.ReturnedText = await this.DescriptionMapper.MapPokemonDescription(ApiResponse, descriptionLanguage);
 
-                if (!string.IsNullOrWhiteSpace(pokeApiResponse.PokemonDescription))
+                if (!string.IsNullOrWhiteSpace(pokeApiResponse.ReturnedText))
                 {
                     this.Logger.LogInformation($"[Operation=InterepretPokeApiResponse], Status=Success, Message=Successfully mapped description from response");
 

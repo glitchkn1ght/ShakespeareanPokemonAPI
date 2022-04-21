@@ -21,7 +21,7 @@ namespace ShakespeareanPokemonAPI.Mappers
     {
         public async Task<string> MapPokemonDescription(HttpResponseMessage httpResponse, string descriptionLanguage)
         {
-            PokeApiResponse mappedResponse = new PokeApiResponse();
+            ServiceResponse mappedResponse = new ServiceResponse();
 
             var settings = new JsonSerializerSettings { Error = (se, ev) => { ev.ErrorContext.Handled = true; } };
 

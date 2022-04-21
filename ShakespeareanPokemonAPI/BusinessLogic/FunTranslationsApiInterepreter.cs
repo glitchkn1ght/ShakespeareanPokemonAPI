@@ -16,7 +16,7 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
 
     public interface IFunTranslationsApiInterepreter
     {
-        public Task<TranslationResponse> InterepretFTApiResponse(HttpResponseMessage ApiResponse);
+        public Task<ServiceResponse> InterepretFTApiResponse(HttpResponseMessage ApiResponse);
     }
 
     public class FunTranslationsApiInterepreter : IFunTranslationsApiInterepreter
@@ -30,17 +30,17 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
             this.TranslationMapper = translationMapper ?? throw new ArgumentNullException(nameof(translationMapper));
         }
 
-        public async Task<TranslationResponse> InterepretFTApiResponse(HttpResponseMessage ApiResponse)
+        public async Task<ServiceResponse> InterepretFTApiResponse(HttpResponseMessage ApiResponse)
         {
-            TranslationResponse translationResponse = new TranslationResponse();
+            ServiceResponse translationResponse = new ServiceResponse();
 
             if (ApiResponse.IsSuccessStatusCode)
             {
                 this.Logger.LogInformation($"[Operation=InterepretFTApiResponse], Status=Success, Message=Success code received from FunTranslations endpoint, mapping translation.");
 
-                translationResponse.TranslatedText = await this.TranslationMapper.MapTranslation(ApiResponse);
+                translationResponse.ReturnedText = await this.TranslationMapper.MapTranslation(ApiResponse);
 
-                if (!string.IsNullOrWhiteSpace(translationResponse.TranslatedText))
+                if (!string.IsNullOrWhiteSpace(translationResponse.ReturnedText))
                 {
                     this.Logger.LogInformation($"[Operation=InterepretFTApiResponse], Status=Success, Message=Successfully mapped translation from response");
 

@@ -5,23 +5,21 @@
 
 namespace ShakespeareanPokemonAPI.Services
 {
-    using PokeApiNet;
-    using ShakespeareanPokemonAPI.Models.Config;
-    using ShakespeareanPokemonAPI.Models.Responses;
-    using System.Threading.Tasks;
-    using System.Net.Http;
-    using Microsoft.Extensions.Options;
-    using System;
-    using System.Text.Encodings;
-    using ShakespeareanPokemonAPI.BusinessLogic;
     using Microsoft.Extensions.Logging;
-    using ShakespeareanPokemonAPI.Models.FunTranslationsApi;
+    using Microsoft.Extensions.Options;
     using Newtonsoft.Json;
+    using ShakespeareanPokemonAPI.BusinessLogic;
+    using ShakespeareanPokemonAPI.Models.Config;
+    using ShakespeareanPokemonAPI.Models.FunTranslationsApi;
+    using ShakespeareanPokemonAPI.Models.Responses;
+    using System;
+    using System.Net.Http;
     using System.Text;
+    using System.Threading.Tasks;
 
     public interface IFunTranslationsApiService
     {
-        public Task<TranslationResponse> TranslatePokemonDescription(string descriptionInModernEnglish);
+        public Task<ServiceResponse> TranslatePokemonDescription(string descriptionInModernEnglish);
     }
 
     public class FunTranslationsApiService : IFunTranslationsApiService
@@ -40,7 +38,7 @@ namespace ShakespeareanPokemonAPI.Services
             this.FTApiInterpreter = ftApiInterpreter;
         }
 
-        public async Task<TranslationResponse> TranslatePokemonDescription(string descriptionInModernEnglish)
+        public async Task<ServiceResponse> TranslatePokemonDescription(string descriptionInModernEnglish)
         {
             var resource = $"{FTApiConfigSettings.ShakespeareTranslateResourceUrl}";
 
@@ -49,7 +47,7 @@ namespace ShakespeareanPokemonAPI.Services
 
             this.Logger.LogInformation($"[Operation=TranslatePokemonDescription], Status=Success, Message=Calling to FunTranslationsApi at {this.Client.BaseAddress+resource}");
 
-            TranslationResponse translationResponse = await this.FTApiInterpreter.InterepretFTApiResponse(await this.Client.PostAsync(resource,data));
+            ServiceResponse translationResponse = await this.FTApiInterpreter.InterepretFTApiResponse(await this.Client.PostAsync(resource,data));
 
             return translationResponse;
         }

@@ -85,10 +85,10 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
                 StatusCode = 200,
             };
 
-            TranslationResponse actual = this.funTranslationsApiInterepreter.InterepretFTApiResponse(msg).Result;
+            ServiceResponse actual = this.funTranslationsApiInterepreter.InterepretFTApiResponse(msg).Result;
 
             Assert.AreEqual(expected.StatusCode, actual.ResponseStatus.StatusCode);
-            Assert.AreEqual("somedescription", actual.TranslatedText);
+            Assert.AreEqual("somedescription", actual.ReturnedText);
         }
 
         [TestCase("  ")]
@@ -106,7 +106,7 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
                 StatusMessage = "TranslationApi call was sucessful but no description could be mapped"
             };
 
-            TranslationResponse actual = this.funTranslationsApiInterepreter.InterepretFTApiResponse(msg).Result;
+            ServiceResponse actual = this.funTranslationsApiInterepreter.InterepretFTApiResponse(msg).Result;
 
             Assert.AreEqual(expected.StatusCode, actual.ResponseStatus.StatusCode);
             Assert.AreEqual(expected.StatusMessage, actual.ResponseStatus.StatusMessage);
@@ -131,7 +131,7 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
                 StatusMessage = retMsg
             };
 
-            TranslationResponse actual = this.funTranslationsApiInterepreter.InterepretFTApiResponse(msg).Result;
+            ServiceResponse actual = this.funTranslationsApiInterepreter.InterepretFTApiResponse(msg).Result;
 
             Assert.AreEqual(expected.StatusCode, actual.ResponseStatus.StatusCode);
             Assert.AreEqual(expected.StatusMessage, actual.ResponseStatus.StatusMessage);

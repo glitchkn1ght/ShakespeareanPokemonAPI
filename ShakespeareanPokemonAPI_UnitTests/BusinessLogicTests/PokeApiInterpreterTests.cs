@@ -84,10 +84,10 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
                 StatusCode = 200,
             };
 
-            PokeApiResponse actual = this.pokeApiInterpreter.InterepretPokeApiResponse(msg, It.IsAny<string>()).Result;
+            ServiceResponse actual = this.pokeApiInterpreter.InterepretPokeApiResponse(msg, It.IsAny<string>()).Result;
 
             Assert.AreEqual(expected.StatusCode, actual.ResponseStatus.StatusCode);
-            Assert.AreEqual("somedescription", actual.PokemonDescription);
+            Assert.AreEqual("somedescription", actual.ReturnedText);
         }
 
         [TestCase("  ")]
@@ -105,7 +105,7 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
                 StatusMessage = "Pokemon was found on Api but no valid description could be mapped"
             };
 
-            PokeApiResponse actual = this.pokeApiInterpreter.InterepretPokeApiResponse(msg, It.IsAny<string>()).Result;
+            ServiceResponse actual = this.pokeApiInterpreter.InterepretPokeApiResponse(msg, It.IsAny<string>()).Result;
 
             Assert.AreEqual(expected.StatusCode, actual.ResponseStatus.StatusCode);
             Assert.AreEqual(expected.StatusMessage, actual.ResponseStatus.StatusMessage);
@@ -123,7 +123,7 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
                 StatusMessage = "Could not retrieve Pokemon from PokeApi"
             };
 
-            PokeApiResponse actual = this.pokeApiInterpreter.InterepretPokeApiResponse(msg, It.IsAny<string>()).Result;
+            ServiceResponse actual = this.pokeApiInterpreter.InterepretPokeApiResponse(msg, It.IsAny<string>()).Result;
 
             Assert.AreEqual(expected.StatusCode, actual.ResponseStatus.StatusCode);
             Assert.AreEqual(expected.StatusMessage, actual.ResponseStatus.StatusMessage);

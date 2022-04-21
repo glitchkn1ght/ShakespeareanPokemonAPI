@@ -5,8 +5,8 @@
 
 namespace ShakespeareanPokemonAPI.Models.Responses
 {
-    public class PokeApiResponse : BaseResponse
+    public class ServiceResponse : BaseResponse
     {
-        public string PokemonDescription { get; set; }
+        public string ReturnedText { get; set; }
     }
 }
