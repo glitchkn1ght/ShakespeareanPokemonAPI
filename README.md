@@ -1,6 +1,11 @@
 # ShakespeareanPokemonAPI
 API challenge for TrueLayer
 
+ToDO-DELTEBEFORESUBMISSION
+- Add constructor tests of services classes
+- add notes on general design skinny controllers etc.
+- swagger examples lack somewhat
+- investigate pokenet library httpclient issue, and mention why you didn't use it. 
 
 **How To Run**
 - Download Visual studio if not already installed. 
@@ -9,6 +14,11 @@ API challenge for TrueLayer
 - Click on green triangle in VS toolbar to build and run in IISExpress/Docker.
 - For convenience i've included the Postman collections i used during development. Two are for the public apis the solutions uses and other is for the solution itself
   (You may need to change the port number but should work otherwise). 
+
+**Notes on the General Design**
+- Overall my goal was to keep the solution well organized and easy to comprehend with folders/classes/variable named descriptively without being overly verbose.
+- Feedback i've had on previous tests noted that my controller was way too bulky, therefore i tried to move as much as possible into different layers of business logic classes. I'm aware these BL classes have slightly awkward names, it's always something i struggle with. 
+- Orignally the each api/interpreter class had it's own response type PokeApiResponse and FTApiResponse. However each inherited from same Base class and each only contained one property that were both strings. Therefore i decided to combine them into a single ServiceResponse class. This seems cleaner but comes as the expense of the property name being generic e.g. returnedText. 
 
  **Known Issues/Areas for improvement**
 - FunTranlsationsAPI free tier is limited to 5 requests per hour which is quite low, especially in terms of testing. Can avoid this issue by using a VPN and changing
