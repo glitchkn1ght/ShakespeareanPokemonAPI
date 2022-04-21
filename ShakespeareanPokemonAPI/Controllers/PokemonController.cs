@@ -15,14 +15,14 @@ namespace ShakespeareanPokemonAPI.Controllers
 
     [ApiController]
     [Route("[controller]")]
-    public class ShakespeareanPokemonController : ControllerBase
+    public class PokemonController : ControllerBase
     {
-        private readonly ILogger<ShakespeareanPokemonController> Logger;
+        private readonly ILogger<PokemonController> Logger;
         private readonly IShakespeareanPokemonOrchestrator ShakespeareanPokemonOrchestrator;
 
-        public ShakespeareanPokemonController
+        public PokemonController
             (
-                ILogger<ShakespeareanPokemonController> logger,
+                ILogger<PokemonController> logger,
                 IShakespeareanPokemonOrchestrator shakespeareanPokemonOrchestrator
             )
         {

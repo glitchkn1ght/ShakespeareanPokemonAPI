@@ -17,16 +17,16 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
 
     public class ShakespeareanPokemonControllerTests
     {
-        private Mock<ILogger<ShakespeareanPokemonController>> LoggerMock;
+        private Mock<ILogger<PokemonController>> LoggerMock;
         private Mock<IShakespeareanPokemonOrchestrator> shakespeareanPokemonOrchestratorMock;
-        private ShakespeareanPokemonController shakespeareanPokemonController;
+        private PokemonController shakespeareanPokemonController;
 
         [SetUp]
         public void Setup()
         {
-            this.LoggerMock = new Mock<ILogger<ShakespeareanPokemonController>>();
+            this.LoggerMock = new Mock<ILogger<PokemonController>>();
             this.shakespeareanPokemonOrchestratorMock = new Mock<IShakespeareanPokemonOrchestrator>();
-            this.shakespeareanPokemonController = new ShakespeareanPokemonController(this.LoggerMock.Object, this.shakespeareanPokemonOrchestratorMock.Object);
+            this.shakespeareanPokemonController = new PokemonController(this.LoggerMock.Object, this.shakespeareanPokemonOrchestratorMock.Object);
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
             Assert.Throws(
                 Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo("logger"), delegate
                 {
-                    this.shakespeareanPokemonController = new ShakespeareanPokemonController
+                    this.shakespeareanPokemonController = new PokemonController
                     (
                         null,
                         this.shakespeareanPokemonOrchestratorMock.Object
@@ -49,7 +49,7 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
             Assert.Throws(
                 Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo("shakespeareanPokemonOrchestrator"), delegate
                 {
-                    this.shakespeareanPokemonController = new ShakespeareanPokemonController
+                    this.shakespeareanPokemonController = new PokemonController
                     (
                         this.LoggerMock.Object,
                         null
@@ -63,7 +63,7 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
             Assert.DoesNotThrow(
                  delegate
                 {
-                    this.shakespeareanPokemonController = new ShakespeareanPokemonController
+                    this.shakespeareanPokemonController = new PokemonController
                     (
                         this.LoggerMock.Object,
                         this.shakespeareanPokemonOrchestratorMock.Object
