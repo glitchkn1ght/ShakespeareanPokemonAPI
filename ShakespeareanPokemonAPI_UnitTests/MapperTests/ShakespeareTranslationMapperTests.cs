@@ -7,10 +7,8 @@ namespace ShakespeareanPokemonAPI_UnitTests.MapperTests
 {
     using Newtonsoft.Json;
     using NUnit.Framework;
-    using PokeApiNet;
     using ShakespeareanPokemonAPI.Mappers;
     using ShakespeareanPokemonAPI.Models.FunTranslationsApi;
-    using System.Collections.Generic;
     using System.Net.Http;
 
     public class ShakespeareTranslationMapperTests

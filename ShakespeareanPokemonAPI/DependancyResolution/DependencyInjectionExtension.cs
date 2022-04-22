@@ -9,11 +9,13 @@ namespace ShakespeareanPokemonAPI.DependancyResolution
     using ShakespeareanPokemonAPI.BusinessLogic;
     using ShakespeareanPokemonAPI.Mappers;
     using ShakespeareanPokemonAPI.Services;
+    using ShakespeareanPokemonAPI.Validation;
 
     public static class DependencyInjectionExtension
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
+            services.AddScoped<IInputValidator, InputValidator>();
             services.AddScoped<IPokemonDescriptionMapper, PokemonDescriptionMapper>();
             services.AddScoped<ITranslationMapper, ShakespeareTranslationMapper>();
             services.AddScoped<IPokeApiInterpreter, PokeApiInterpreter>();

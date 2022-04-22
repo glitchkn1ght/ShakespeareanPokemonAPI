@@ -10,6 +10,7 @@ namespace ShakespeareanPokemonAPI.Controllers
     using Microsoft.Extensions.Logging;
     using ShakespeareanPokemonAPI.BusinessLogic;
     using ShakespeareanPokemonAPI.Models.Responses;
+    using ShakespeareanPokemonAPI.Validation;
     using System;
     using System.Threading.Tasks;
 
@@ -18,15 +19,18 @@ namespace ShakespeareanPokemonAPI.Controllers
     public class PokemonController : ControllerBase
     {
         private readonly ILogger<PokemonController> Logger;
+        private readonly IInputValidator InputValidator;
         private readonly IShakespeareanPokemonOrchestrator ShakespeareanPokemonOrchestrator;
-
+      
         public PokemonController
             (
                 ILogger<PokemonController> logger,
+                IInputValidator inputValidator,
                 IShakespeareanPokemonOrchestrator shakespeareanPokemonOrchestrator
             )
         {
             this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.InputValidator = inputValidator ?? throw new ArgumentNullException(nameof(inputValidator));
             this.ShakespeareanPokemonOrchestrator = shakespeareanPokemonOrchestrator ?? throw new ArgumentNullException(nameof(shakespeareanPokemonOrchestrator));
         }
 
@@ -37,7 +41,6 @@ namespace ShakespeareanPokemonAPI.Controllers
         /// <response code="404">If the request URL on eiter of the Apis cannot be found on the server.</response>  
         /// <response code="403">If you have exceeded the usage limit on TranslationApi</response>  
         /// <response code="500">Internal application Error.</response>  
-
         [HttpGet("{pokemonName}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ShakespeareanPokemon))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseStatus))]
@@ -48,7 +51,12 @@ namespace ShakespeareanPokemonAPI.Controllers
         {
             try
             {
-                this.Logger.LogInformation($"[Operation=ShakespeareanPokemonController(Get)], Status=Success, Message=Attempting to retrieve and map description for pokemon {pokemonName}");
+                if (!this.InputValidator.ValidateInput(pokemonName))
+                {
+                    return new ObjectResult(new ResponseStatus(false, 400, $"PokemonName {pokemonName} could not be validated. Please check your input.")) { StatusCode = 400 };
+                }
+                
+                this.Logger.LogInformation($"[Operation=ShakespeareanPokemonController(Get)], Status=Success, Message=Input Validated. Attempting to retrieve and map description for pokemon {pokemonName}");
 
                 ShakespeareanPokemonResponse response = await this.ShakespeareanPokemonOrchestrator.GetShakespeareanPokemon(pokemonName);
 
@@ -68,7 +76,7 @@ namespace ShakespeareanPokemonAPI.Controllers
             {
                 this.Logger.LogError($"[Operation=ShakespeareanPokemonController(Get)], Status=Failed, Message=Exeception thrown, Details: {ex.Message}");
 
-                return new ObjectResult("Internal Application Error Has Occurred") { StatusCode = 500 };
+                return new ObjectResult(new ResponseStatus(false, 500, "Internal Application Error Has Occurred")) { StatusCode = 500 };
             }
         }
     }

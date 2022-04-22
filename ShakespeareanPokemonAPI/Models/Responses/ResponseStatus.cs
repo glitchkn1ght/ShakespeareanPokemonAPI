@@ -7,6 +7,15 @@ namespace ShakespeareanPokemonAPI.Models.Responses
 {
     public class ResponseStatus
     {
+        public ResponseStatus() { }
+
+        public ResponseStatus(bool isSuccess, int statusCode, string statusMessage)
+        {
+            this.IsSuccess = isSuccess;
+            this.StatusCode = statusCode;
+            this.StatusMessage= statusMessage;
+        }
+        
         public bool IsSuccess { get; set; } = false;
 
         public int StatusCode { get; set; }
