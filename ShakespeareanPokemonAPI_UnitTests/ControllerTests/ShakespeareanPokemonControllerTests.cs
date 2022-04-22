@@ -128,7 +128,7 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
                 {
                     IsSuccess = false,
                     StatusCode = 400,
-                    StatusMessage = $"PokemonName {"\"\""} could not be validated. Please check your input."
+                    StatusMessage = $"PokemonName [{"\"\""}] could not be validated. Please check your input."
                 }
             };
 

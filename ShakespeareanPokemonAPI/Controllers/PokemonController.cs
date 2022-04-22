@@ -53,7 +53,7 @@ namespace ShakespeareanPokemonAPI.Controllers
             {
                 if (!this.InputValidator.ValidateInput(pokemonName))
                 {
-                    return new ObjectResult(new ResponseStatus(false, 400, $"PokemonName {pokemonName} could not be validated. Please check your input.")) { StatusCode = 400 };
+                    return new ObjectResult(new ResponseStatus(false, 400, $"PokemonName [{pokemonName}] could not be validated. Please check your input.")) { StatusCode = 400 };
                 }
                 
                 this.Logger.LogInformation($"[Operation=ShakespeareanPokemonController(Get)], Status=Success, Message=Input Validated. Attempting to retrieve and map description for pokemon {pokemonName}");
