@@ -58,7 +58,7 @@ namespace ShakespeareanPokemonAPI.Controllers
                 
                 this.Logger.LogInformation($"[Operation=ShakespeareanPokemonController(Get)], Status=Success, Message=Input Validated. Attempting to retrieve and map description for pokemon {pokemonName}");
 
-                ShakespeareanPokemonResponse response = await this.ShakespeareanPokemonOrchestrator.GetShakespeareanPokemon(pokemonName);
+                ShakespeareanPokemonResponse response = await this.ShakespeareanPokemonOrchestrator.GetShakespeareanPokemon(pokemonName.ToLower());
 
                 if (response.ResponseStatus.IsSuccess)
                 {

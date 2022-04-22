@@ -99,7 +99,7 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
             {
                 Pokemon = new ShakespeareanPokemon()
                 {
-                    Name = "Psyduck",
+                    Name = "psyduck",
                     Description = "Forsooth, it's like looking in a mirror."
                 },
                 ResponseStatus = new ResponseStatus()
@@ -109,10 +109,10 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
                 }
             };
 
-            this.inputValidatorMock.Setup(x => x.ValidateInput("Psyduck")).Returns(true);
-            this.shakespeareanPokemonOrchestratorMock.Setup(x => x.GetShakespeareanPokemon("Psyduck")).Returns(Task.FromResult(expectedResponse));
+            this.inputValidatorMock.Setup(x => x.ValidateInput("psyduck")).Returns(true);
+            this.shakespeareanPokemonOrchestratorMock.Setup(x => x.GetShakespeareanPokemon("psyduck")).Returns(Task.FromResult(expectedResponse));
 
-             ObjectResult actual = (ObjectResult)this.shakespeareanPokemonController.Get("Psyduck").Result;
+             ObjectResult actual = (ObjectResult)this.shakespeareanPokemonController.Get("psyduck").Result;
 
             Assert.AreEqual(expectedResponse.ResponseStatus.StatusCode, actual.StatusCode);
             Assert.AreEqual(expectedResponse.Pokemon.Name, ((ShakespeareanPokemon)actual.Value).Name);
@@ -156,10 +156,10 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
                 }
             };
 
-            this.inputValidatorMock.Setup(x => x.ValidateInput("Psyduck")).Returns(true);
-            this.shakespeareanPokemonOrchestratorMock.Setup(x => x.GetShakespeareanPokemon("Psyduck")).Returns(Task.FromResult(expectedResponse));
+            this.inputValidatorMock.Setup(x => x.ValidateInput("psyduck")).Returns(true);
+            this.shakespeareanPokemonOrchestratorMock.Setup(x => x.GetShakespeareanPokemon("psyduck")).Returns(Task.FromResult(expectedResponse));
 
-            ObjectResult actual = (ObjectResult)this.shakespeareanPokemonController.Get("Psyduck").Result;
+            ObjectResult actual = (ObjectResult)this.shakespeareanPokemonController.Get("psyduck").Result;
 
             Assert.AreEqual(expectedResponse.ResponseStatus.StatusCode, actual.StatusCode);
             Assert.AreEqual(expectedResponse.ResponseStatus.StatusMessage, ((ResponseStatus)actual.Value).StatusMessage);
