@@ -2,10 +2,11 @@
 API challenge for TrueLayer
 
 **How To Run**
-- Download Visual studio if not already installed. 
-- Clone repo from github.
+- Download Visual Studio if not already installed. 
+- Clone repository from github.
 - Open in visual studio.
-- Click on green triangle in VS toolbar to build and run in IISExpress/Docker.
+- Switch to the solution view if not already in it. 
+- Click on green triangle in the middle of toolbar at the top of Visual Studio to build and run in IISExpress/Docker.
 - For convenience I've included the Postman collections i used during development. Two are for the public API's the solutions uses and other is for the solution itself
   (You may need to change the port number but should work otherwise). 
 
