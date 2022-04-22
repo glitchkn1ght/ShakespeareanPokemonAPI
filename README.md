@@ -22,6 +22,7 @@ API challenge for TrueLayer
 - I think the Interpreter classes could be one class with different constructor arguments or at least implementations of the same interface, same for the mappers, first thing i would look at given more time. 
 - I am using a library PokeApiNet which is intended as a wrapper for calls to PokeApi net. However calls using the libraries httpClient immediately throw an exception
  if a non success code is received. This seems less than ideal as it gives you less control over the flow so i decided to use a standard HttpClient instead and only used the library for it's built in classes. However this comes at the expense of not having the libraries caching mechanism. Given more time i'd try to incorporate the caching without using their client. 
+- The input validation is far from comprehensive and would be a priority for improvement. 
 - I didn't write any integration tests because in my current team we have an automation specialist for it and there didn't seem enough time to teach myself. I have recently been learning PACT testing which i would have included except it's designed to function between projects e.g. a consumer and a provider and the test is only one side of the equation. 
 - The unit testing is designed to be illustrative of general understanding rather than completely exhaustive although i did try to be thorough.
 - I think i might have been a bit too enthusiastic with the amount of logs included but i've tried to keep them concise and in a format that could be easily read by consumers such as splunk.
