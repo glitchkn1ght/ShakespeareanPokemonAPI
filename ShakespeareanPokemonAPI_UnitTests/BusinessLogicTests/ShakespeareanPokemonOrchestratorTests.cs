@@ -100,7 +100,7 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
 
             Assert.AreEqual(true, orchestratorResponse.ResponseStatus.IsSuccess);
             Assert.AreEqual(200, orchestratorResponse.ResponseStatus.StatusCode);
-            Assert.AreEqual("Spits fire yond is hot enow to melt boulders. Known to cause forest fires unintentionally.", orchestratorResponse.Pokemon.ShakespeareanDescription);
+            Assert.AreEqual("Spits fire yond is hot enow to melt boulders. Known to cause forest fires unintentionally.", orchestratorResponse.Pokemon.Description);
         }
 
         [TestCase(404,"Not Found")]

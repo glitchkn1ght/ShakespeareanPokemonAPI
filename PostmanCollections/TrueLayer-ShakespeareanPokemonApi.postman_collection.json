@@ -6,25 +6,20 @@
 	},
 	"item": [
 		{
-			"name": "GetShakeSpearianPokemon",
+			"name": "GetShakespearianPokemon",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:44396/Pokemon?pokemonName=ditto",
+					"raw": "https://localhost:44396/Pokemon/ditto",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
 					"port": "44396",
 					"path": [
-						"Pokemon"
-					],
-					"query": [
-						{
-							"key": "pokemonName",
-							"value": "ditto"
-						}
+						"Pokemon",
+						"ditto"
 					]
 				}
 			},

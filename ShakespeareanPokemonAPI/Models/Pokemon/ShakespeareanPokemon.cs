@@ -13,6 +13,6 @@ namespace ShakespeareanPokemonAPI.Models.Responses
         public string Name { get; set; }
 
         [JsonProperty("description")]
-        public string ShakespeareanDescription { get; set; }
+        public string Description { get; set; }
     }
 }

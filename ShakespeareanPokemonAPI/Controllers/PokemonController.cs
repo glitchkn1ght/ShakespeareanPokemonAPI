@@ -38,7 +38,7 @@ namespace ShakespeareanPokemonAPI.Controllers
         /// <response code="403">If you have exceeded the usage limit on TranslationApi</response>  
         /// <response code="500">Internal application Error.</response>  
 
-        [HttpGet]
+        [HttpGet("{pokemonName}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ShakespeareanPokemon))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResponseStatus))]
         [ProducesResponseType(StatusCodes.Status403Forbidden, Type = typeof(ResponseStatus))]

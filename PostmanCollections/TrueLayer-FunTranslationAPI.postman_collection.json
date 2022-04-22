@@ -1,0 +1,17 @@
+{
+	"info": {
+		"_postman_id": "8e98a05a-8c07-4330-a888-9bbe91482d5a",
+		"name": "TrueLayer-FunTranslationAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "TranslateToShakespearian",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

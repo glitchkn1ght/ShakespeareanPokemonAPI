@@ -79,7 +79,7 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
                 Pokemon = new ShakespeareanPokemon()
                 {
                     Name = "Psyduck",
-                    ShakespeareanDescription = "Forsooth, it's like looking in a mirror."
+                    Description = "Forsooth, it's like looking in a mirror."
                 },
                 ResponseStatus = new ResponseStatus()
                 {
@@ -94,7 +94,7 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
 
             Assert.AreEqual(expectedResponse.ResponseStatus.StatusCode, actual.StatusCode);
             Assert.AreEqual(expectedResponse.Pokemon.Name, ((ShakespeareanPokemon)actual.Value).Name);
-            Assert.AreEqual(expectedResponse.Pokemon.ShakespeareanDescription, ((ShakespeareanPokemon)actual.Value).ShakespeareanDescription);
+            Assert.AreEqual(expectedResponse.Pokemon.Description, ((ShakespeareanPokemon)actual.Value).Description);
         }
 
         [TestCase(404,"Not Found")]

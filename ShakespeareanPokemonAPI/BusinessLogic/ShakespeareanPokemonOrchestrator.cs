@@ -57,7 +57,7 @@ namespace ShakespeareanPokemonAPI.BusinessLogic
             response.ResponseStatus.IsSuccess = true;
             response.ResponseStatus.StatusCode = 200;
             response.Pokemon.Name = pokemonName;
-            response.Pokemon.ShakespeareanDescription = traslationResponse.ReturnedText;
+            response.Pokemon.Description = traslationResponse.ReturnedText;
 
             return response;
         }
