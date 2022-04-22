@@ -37,7 +37,7 @@ namespace ShakespeareanPokemonAPI.Controllers
         /// <summary> Gets the pokemons name and it's flavour text translated into shakespearean</summary>
         /// <param name="pokemonName"> The name of the pokemon you wish to retrieve data for</param>
         /// <response code="200">Returns the pokemons data.</response>
-        /// <response code="400">If the request parameters are malformed.</response>
+        /// <response code="400">If the request parameters are malformed, or if the inputted PokemonName is invalid</response>
         /// <response code="404">If the request URL on eiter of the Apis cannot be found on the server.</response>  
         /// <response code="403">If you have exceeded the usage limit on TranslationApi</response>  
         /// <response code="500">Internal application Error.</response>  
