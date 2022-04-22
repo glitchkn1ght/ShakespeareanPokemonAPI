@@ -102,7 +102,7 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
             ResponseStatus expected = new ResponseStatus
             {
                 StatusCode = 500,
-                StatusMessage = "Pokemon was found on Api but no valid description could be mapped"
+                StatusMessage = "Pokemon was found on PokeApi but no valid description could be mapped."
             };
 
             ServiceResponse actual = this.pokeApiInterpreter.InterepretPokeApiResponse(msg, It.IsAny<string>()).Result;
@@ -120,7 +120,7 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
             ResponseStatus expected = new ResponseStatus
             {
                 StatusCode = retCode,
-                StatusMessage = "Could not retrieve Pokemon from PokeApi"
+                StatusMessage = "Could not retrieve Pokemon from PokeApi endpoint."
             };
 
             ServiceResponse actual = this.pokeApiInterpreter.InterepretPokeApiResponse(msg, It.IsAny<string>()).Result;

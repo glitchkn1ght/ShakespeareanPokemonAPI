@@ -103,7 +103,7 @@ namespace ShakespeareanPokemonAPI_UnitTests.BusinesssLogicTests
             ResponseStatus expected = new ResponseStatus
             {
                 StatusCode = 500,
-                StatusMessage = "TranslationApi call was sucessful but no description could be mapped"
+                StatusMessage = "Call to TranslationApi was sucessful but no description could be mapped."
             };
 
             ServiceResponse actual = this.funTranslationsApiInterepreter.InterepretFTApiResponse(msg).Result;

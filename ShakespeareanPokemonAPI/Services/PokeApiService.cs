@@ -7,6 +7,7 @@ namespace ShakespeareanPokemonAPI.Services
 {
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
+    using PokeApiNet;
     using ShakespeareanPokemonAPI.BusinessLogic;
     using ShakespeareanPokemonAPI.Models.Config;
     using ShakespeareanPokemonAPI.Models.Responses;
@@ -28,11 +29,11 @@ namespace ShakespeareanPokemonAPI.Services
 
         public PokeApiService(ILogger<PokeApiService> logger, HttpClient client, IOptions<ConfigSettingsPokeAPI> pokeApiConfigSettings, IPokeApiInterpreter pokeApiInterpreter)
         {
-            this.Logger = logger;
+            this.Logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.PokeApiConfigSettings = pokeApiConfigSettings.Value;
-            this.Client = client;
+            this.Client = client ?? throw new ArgumentNullException(nameof(client));
             this.Client.BaseAddress = new Uri(PokeApiConfigSettings.BaseUrl);
-            this.PokeApiInterpreter = pokeApiInterpreter;
+            this.PokeApiInterpreter = pokeApiInterpreter ?? throw new ArgumentNullException(nameof(pokeApiInterpreter));
         }
 
         public async Task<ServiceResponse> GetPokemonFromApi(string pokemonName)
